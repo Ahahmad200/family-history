@@ -1,79 +1,321 @@
-*{
+/* ==========================================================================
+   OUR FAMILY HERITAGE — CLEAN STYLESHEET
+
+   CONTENTS
+   01. Theme variables
+   02. Base, header, navigation, footer
+   03. Buttons and forms
+   04. Home page
+   05. Family tree (cards, generations, descendants)
+   06. Member biography popup + photo viewer
+   07. How am I related?
+   08. Family annals (timeline)
+   09. Admin dashboard
+   10. Legacy tree classes (delete if your HTML/JS no longer uses them)
+   11. Animations
+   12. Reduced motion
+   ========================================================================== */
+
+
+/* ==========================================================================
+   01. THEME VARIABLES
+   ========================================================================== */
+
+:root {
+    --royal-green: #123d2b;
+    --deep-green: #092c1e;
+    --heritage-gold: #c49a45;
+    --light-gold: #e8d4a4;
+    --warm-ivory: #faf7ef;
+    --pure-white: #ffffff;
+    --heritage-text: #26352b;
+    --muted-text: #77796f;
+}
+
+
+/* ==========================================================================
+   02. BASE, HEADER, NAVIGATION, FOOTER
+   ========================================================================== */
+
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f1e8;
-    color: #2d241c;
-}
-
-header {
-    background: #3b2f2f;
-    color: white;
-    text-align: center;
-    padding: 40px 20px;
-}
-
-header h1 {
-    font-size: 38px;
-    margin-bottom: 10px;
-}
-
-header p {
-    color: #e7c98b;
+    font-family: Georgia, "Times New Roman", serif;
+    background: var(--warm-ivory);
+    color: var(--heritage-text);
+    line-height: 1.6;
 }
 
 main {
     min-height: 70vh;
     padding: 40px 20px;
+    background: var(--warm-ivory);
 }
 
-.welcome {
-    max-width: 800px;
-    margin: 40px auto;
-    background: white;
-    padding: 50px 30px;
+/* Header */
+
+header {
+    padding: 25px 20px 20px;
+    background: linear-gradient(135deg, var(--deep-green), var(--royal-green));
+    color: white;
     text-align: center;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    border-bottom: 4px solid var(--heritage-gold);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
 }
 
-.welcome h2 {
-    font-size: 30px;
-    margin-bottom: 20px;
+.header-content {
+    max-width: 1250px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 25px;
 }
 
-.welcome p {
-    line-height: 1.7;
-    margin-bottom: 30px;
+.site-brand h1 {
+    margin: 0;
+    color: var(--light-gold);
+    font-size: clamp(25px, 4vw, 36px);
+    letter-spacing: 1px;
 }
+
+.site-brand p {
+    margin: 5px 0 0;
+    color: #eee3c9;
+    font-size: 14px;
+}
+
+/* Navigation */
+
+.main-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.main-navigation a {
+    display: inline-block;
+    padding: 10px 17px;
+    border-radius: 25px;
+    color: white;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+.main-navigation a:hover,
+.main-navigation a.active {
+    background: var(--heritage-gold);
+    color: var(--deep-green);
+}
+
+/* Footer */
+
+footer {
+    padding: 28px 20px;
+    background: var(--deep-green);
+    color: white;
+    text-align: center;
+    border-top: 3px solid var(--heritage-gold);
+}
+
+footer p {
+    margin: 5px 0 10px;
+    color: #eee3c9;
+}
+
+footer a {
+    color: var(--light-gold);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Section headings */
+
+.family-tree-section > h2,
+.admin-section > h2 {
+    color: var(--royal-green);
+}
+
+@media (max-width: 700px) {
+
+    header {
+        padding: 22px 12px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 18px;
+    }
+
+    .main-navigation {
+        width: 100%;
+        gap: 5px;
+    }
+
+    .main-navigation a {
+        padding: 9px 12px;
+        font-size: 13px;
+    }
+}
+
+
+/* ==========================================================================
+   03. BUTTONS AND FORMS
+   ========================================================================== */
 
 button {
-    background: #b8860b;
-    color: white;
-    border: none;
     padding: 14px 28px;
+    border: none;
     border-radius: 30px;
+    background: var(--royal-green);
+    color: white;
     font-size: 16px;
     cursor: pointer;
+    transition: background 0.2s ease;
 }
 
 button:hover {
-    background: #8f6808;
+    background: var(--deep-green);
 }
 
-footer {
-    background: #3b2f2f;
+.admin-primary-button {
+    background: var(--royal-green);
+    border: 1px solid var(--heritage-gold);
+}
+
+.admin-primary-button:hover {
+    background: var(--deep-green);
+}
+
+/* Round "×" close buttons: remove the default button padding so the × is centred */
+
+.close-member-modal,
+.admin-member-view-close,
+.relationship-result-close,
+.annals-member-popup-close,
+#closeFamilyPhotoViewer {
+    padding: 0;
+}
+
+input,
+select,
+textarea {
+    accent-color: var(--royal-green);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--heritage-gold);
+    box-shadow: 0 0 0 3px rgba(196, 154, 69, 0.15);
+}
+
+
+/* ==========================================================================
+   04. HOME PAGE
+   ========================================================================== */
+
+.welcome {
+    max-width: 1050px;
+    margin: 40px auto;
+    padding: 65px 30px;
+    background: linear-gradient(135deg, var(--deep-green), var(--royal-green));
     color: white;
     text-align: center;
-    padding: 20px;
+    border: 1px solid var(--heritage-gold);
+    border-radius: 22px;
+    box-shadow: 0 15px 35px rgba(9, 44, 30, 0.16);
 }
-/* =========================================
-   FAMILY TREE
-========================================= */
+
+.welcome h2 {
+    margin-bottom: 20px;
+    color: var(--light-gold);
+    font-size: clamp(27px, 4vw, 38px);
+}
+
+.welcome p {
+    margin-bottom: 30px;
+    color: #f3ead8;
+    line-height: 1.7;
+}
+
+.explore-button {
+    display: inline-block;
+    padding: 13px 25px;
+    background: var(--heritage-gold);
+    color: var(--deep-green);
+    text-decoration: none;
+    border-radius: 30px;
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    transition: 0.25s ease;
+}
+
+.explore-button:hover {
+    background: var(--light-gold);
+    transform: translateY(-2px);
+}
+
+.home-sections {
+    max-width: 1050px;
+    margin: 35px auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.home-card {
+    padding: 28px;
+    background: white;
+    border: 1px solid #e6dcc5;
+    border-left: 4px solid var(--heritage-gold);
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+}
+
+.home-card h3 {
+    color: var(--royal-green);
+}
+
+.home-card a {
+    color: #987020;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+@media (max-width: 700px) {
+
+    .welcome {
+        margin: 20px auto;
+        padding: 40px 20px;
+    }
+
+    .home-sections {
+        grid-template-columns: 1fr;
+        margin: 20px 10px;
+    }
+}
+
+
+/* ==========================================================================
+   05. FAMILY TREE
+   ========================================================================== */
 
 .family-tree-section {
     max-width: 1400px;
@@ -87,3179 +329,32 @@ footer {
     line-height: 1.7;
 }
 
-
-/* Main tree */
-
-.family-tree {
-    width: 100%;
-    padding: 20px;
-}
-
-
-/* Central couple */
-
-.central-couple {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-
-.marriage-symbol {
-    font-size: 32px;
-    padding: 10px;
-}
-
-
-/* Connector */
-
-.main-connector {
-    width: 3px;
-    height: 50px;
-    background: #b8860b;
-    margin: 0 auto;
-}
-
-
-/* Generation title */
-
-.generation-title {
-    font-size: 25px;
-    margin: 20px 0 30px;
-    color: #3b2f2f;
-}
-
-
-/* Children */
-
-.children-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-
-    gap: 25px;
-
-    max-width: 1200px;
-
-    margin: 0 auto;
-}
-
-
-/* =========================================
-   PREMIUM FAMILY MEMBER CARDS
-========================================= */
-
-.member-card {
-    position: relative;
-    box-sizing: border-box;
-
-    width: 100%;
-    padding: 22px 16px;
-
-    background: linear-gradient(
-        160deg,
-        #ffffff 0%,
-        #fbf8f0 100%
-    );
-
-    border: 1px solid #e7dcc3;
-    border-radius: 20px;
-
-    box-shadow:
-        0 5px 15px rgba(45, 36, 28, 0.07),
-        0 1px 3px rgba(45, 36, 28, 0.04);
-
-    text-align: center;
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
-
-    cursor: pointer;
-    overflow-wrap: anywhere;
-}
-
-.member-card:hover {
-    transform: translateY(-4px);
-
-    border-color: #b8860b;
-
-    box-shadow:
-        0 12px 28px rgba(45, 36, 28, 0.13),
-        0 3px 8px rgba(184, 134, 11, 0.10);
-}
-
-.member-card:active {
-    transform: scale(0.98);
-}
-
-
-/* =========================================
-   MEMBER PHOTOGRAPHS
-========================================= */
-
-.member-photo {
-    width: 100px;
-    height: 100px;
-
-    margin: 0 auto 16px;
-
-    padding: 4px;
-    box-sizing: border-box;
-
-    border: 2px solid #c7a451;
-    border-radius: 50%;
-
-    overflow: hidden;
-
-    background: #eee7d7;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    box-shadow:
-        0 3px 10px rgba(45, 36, 28, 0.10);
-}
-
-.member-photo img {
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    border-radius: 50%;
-}
-
-.member-photo-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    height: 100%;
-
-    border-radius: 50%;
-
-    background: linear-gradient(
-        145deg,
-        #f4ead0,
-        #e6d3a5
-    );
-
-    color: #75540a;
-
-    font-size: 27px;
-    font-weight: 700;
-}
-
-
-/* =========================================
-   MEMBER INFORMATION
-========================================= */
-
-.member-info h4 {
-    margin: 0 0 10px;
-
-    color: #2d241c;
-
-    font-size: 17px;
-    font-weight: 700;
-    line-height: 1.5;
-
-    overflow-wrap: anywhere;
-}
-
-.member-relationship {
-    margin: 0 0 12px;
-
-    color: #746b5d;
-
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-.member-status {
-    display: inline-block;
-
-    padding: 6px 13px;
-
-    border: 1px solid #c7dfc9;
-    border-radius: 30px;
-
-    background: #edf7ee;
-    color: #286b36;
-
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-}
-
-
-/* =========================================
-   DECEASED FAMILY MEMBERS
-========================================= */
-
-.member-card.deceased {
-    border-color: #d6cfc2;
-
-    background: linear-gradient(
-        160deg,
-        #ffffff 0%,
-        #f3f0e9 100%
-    );
-}
-
-.member-card.deceased .member-status {
-    background: #eeece8;
-    color: #625c53;
-    border-color: #d9d4ca;
-}
-
-.member-card.deceased .member-photo {
-    border-color: #b7aa91;
-}
-
-
-/* =========================================
-   DESCENDANT CARD ADJUSTMENTS
-========================================= */
-
-.grandchildren-container .member-card {
-    padding: 18px 12px;
-    border-radius: 16px;
-}
-
-.grandchildren-container .member-photo {
-    width: 78px;
-    height: 78px;
-
-    margin-bottom: 12px;
-}
-
-.grandchildren-container .member-info h4 {
-    font-size: 15px;
-}
-
-.grandchildren-container .member-relationship {
-    font-size: 11px;
-}
-
-
-/* =========================================
-   MOBILE FAMILY TREE
-========================================= */
-
-@media (max-width: 600px) {
-
-    .family-tree {
-        padding: 10px;
-        box-sizing: border-box;
-    }
-
-    .central-couple {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .marriage-symbol {
-        font-size: 26px;
-    }
-
-    .children-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
-    }
-
-    .member-card {
-        width: 100%;
-        max-width: 320px;
-
-        margin: 0 auto;
-        padding: 20px 14px;
-
-        border-radius: 18px;
-    }
-
-    .member-card:hover {
-        transform: none;
-    }
-
-    .member-photo {
-        width: 90px;
-        height: 90px;
-    }
-
-    .member-info h4 {
-        font-size: 16px;
-    }
-
-    .grandchildren-container {
-        grid-template-columns:
-            repeat(auto-fit, minmax(145px, 1fr));
-
-        gap: 12px;
-        padding-top: 16px;
-    }
-
-    .grandchildren-container .member-card {
-        max-width: none;
-        padding: 15px 10px;
-    }
-
-    .grandchildren-container .member-photo {
-        width: 68px;
-        height: 68px;
-    }
-
-    .grandchildren-container .member-info h4 {
-        font-size: 14px;
-    }
-}
-
-
-/* Respect visitors who prefer reduced animation. */
-@media (prefers-reduced-motion: reduce) {
-
-    .member-card {
-        transition: none;
-    }
-
-    .member-card:hover,
-    .member-card:active {
-        transform: none;
-    }
-}
-/* =========================================
-   EXPANDABLE FAMILY BRANCHES
-========================================= */
-
-.child-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-
-.expand-family-button {
-    margin-top: 12px;
-
-    background: #3b2f2f;
-
-    color: white;
-
-    border: none;
-
-    padding: 9px 16px;
-
-    border-radius: 20px;
-
-    font-size: 13px;
-
-    cursor: pointer;
-}
-
-
-.expand-family-button:hover {
-    background: #8f6808;
-}
-
-
-/* =========================================
-   RESPONSIVE FAMILY DESCENDANT BRANCHES
-========================================= */
-
-.grandchildren-container {
-    display: grid;
-
-    /* Arrange siblings side by side when space allows. */
-    grid-template-columns:
-        repeat(auto-fit, minmax(min(100%, 180px), 1fr));
-
-    gap: 20px;
-
-    width: 100%;
-    max-width: 1100px;
-
-    margin: 25px auto 0;
-    padding: 25px 10px 10px;
-
-    box-sizing: border-box;
-
-    border-top: 2px solid #e7c98b;
-    position: relative;
-}
-
-/* Keep each descendant branch neatly organized. */
-.grandchildren-container > .child-wrapper {
-    min-width: 0;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* Prevent descendant cards from overflowing their columns. */
-.grandchildren-container .member-card {
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-}
-
-/* Make the layout comfortable on mobile phones. */
-@media (max-width: 600px) {
-    .grandchildren-container {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-        gap: 12px;
-
-        padding: 20px 4px 8px;
-    }
-}
-
-/* Use one column on particularly narrow screens. */
-@media (max-width: 340px) {
-    .grandchildren-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-
-.grandchildren-container .member-card {
-    padding: 15px;
-}
-
-
-.grandchildren-container .member-photo {
-    width: 75px;
-    height: 75px;
-}
-
-
-.grandchildren-container .member-info h4 {
-    font-size: 15px;
-    }
-/* =========================================
-   MEMBER BIOGRAPHY POPUP
-========================================= */
-
-.member-modal {
-    display: none;
-
-    position: fixed;
-
-    z-index: 9999;
-
-    left: 0;
-    top: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0, 0, 0, 0.75);
-
-    padding: 20px;
-
-    align-items: center;
-    justify-content: center;
-}
-
-
-.member-modal-content {
-    position: relative;
-
-    background: #fff;
-
-    width: 100%;
-    max-width: 500px;
-
-    max-height: 90vh;
-
-    overflow-y: auto;
-
-    border-radius: 25px;
-
-    padding: 35px 25px;
-
-    text-align: center;
-
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.3);
-
-    animation:
-        memberModalOpen 0.3s ease;
-}
-
-
-@keyframes memberModalOpen {
-
-    from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
-}
-
-
-/* Close button */
-
-.close-member-modal {
-
-    position: absolute;
-
-    top: 12px;
-    right: 15px;
-
-    width: 40px;
-    height: 40px;
-
-    border-radius: 50%;
-
-    border: none;
-
-    background: #3b2f2f;
-
-    color: white;
-
-    font-size: 28px;
-
-    line-height: 1;
-
-    cursor: pointer;
-}
-
-
-.close-member-modal:hover {
-    background: #b8860b;
-}
-
-
-/* Modal photo */
-
-.modal-member-photo {
-
-    width: 150px;
-    height: 150px;
-
-    margin: 0 auto 20px;
-
-    border-radius: 50%;
-
-    overflow: hidden;
-
-    background: #eee7d7;
-
-    border: 5px solid #e7c98b;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-}
-
-
-.modal-member-photo img {
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-}
-
-
-.modal-member-placeholder {
-
-    font-size: 45px;
-
-    font-weight: bold;
-
-    color: #8f6808;
-}
-
-
-/* Modal name */
-
-.modal-member-name {
-
-    font-size: 28px;
-
-    color: #2d241c;
-
-    margin-bottom: 10px;
-}
-
-
-/* Modal relationship */
-
-.modal-member-relationship {
-
-    color: #8f6808;
-
-    font-weight: bold;
-
-    margin-bottom: 15px;
-}
-
-
-/* Modal status */
-
-.modal-member-status {
-
-    display: inline-block;
-
-    padding: 7px 15px;
-
-    border-radius: 20px;
-
-    background: #e8f5e9;
-
-    color: #2e7d32;
-
-    font-size: 13px;
-
-    margin-bottom: 20px;
-}
-
-
-.modal-member-status.deceased {
-
-    background: #eee;
-
-    color: #666;
-}
-
-
-/* Biography */
-
-.modal-member-biography {
-
-    text-align: left;
-
-    line-height: 1.8;
-
-    color: #444;
-
-    border-top: 1px solid #eee;
-
-    padding-top: 20px;
-
-    margin-top: 10px;
-}
-
-
-.modal-member-biography-title {
-
-    font-size: 18px;
-
-    color: #3b2f2f;
-
-    margin-bottom: 10px;
-}
-
-
-/* Mobile */
-
-@media (max-width: 600px) {
-
-    .member-modal {
-        padding: 15px;
-    }
-
-    .member-modal-content {
-        padding: 30px 20px;
-        max-height: 92vh;
-    }
-
-    .modal-member-photo {
-        width: 125px;
-        height: 125px;
-    }
-
-    .modal-member-name {
-        font-size: 23px;
-    }
-
-}
-/* ================================= */
-/* RELATIONSHIP MANAGEMENT */
-/* ================================= */
-
-.relationship-form {
-    background: #f8f5ed;
-    padding: 20px;
-    border-radius: 15px;
-    margin-top: 20px;
-}
-
-.relationship-form h3,
-.relationship-list-section h3 {
-    color: #3b2f2f;
-    margin-bottom: 15px;
-}
-
-.relationship-form label {
-    display: block;
-    margin-top: 12px;
-    margin-bottom: 6px;
-    font-weight: bold;
-}
-
-.relationship-form select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: white;
-    font-size: 15px;
-}
-
-.relationship-list-section {
-    margin-top: 25px;
-}
-
-/* Scrollable relationship list */
-
-#relationshipsList {
-    max-height: 420px;
-    overflow-y: auto;
-    padding: 5px;
-    background: #f8f5ed;
-    border-radius: 12px;
-}
-
-/* Individual relationship */
-
-.relationship-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    background: white;
-    padding: 12px 15px;
-    margin-bottom: 8px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-
-.relationship-info {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    font-size: 14px;
-}
-
-.relationship-info strong {
-    color: #3b2f2f;
-}
-
-.relationship-info span {
-    color: #b8860b;
-    font-weight: bold;
-}
-
-.delete-relationship-button {
-    flex-shrink: 0;
-    padding: 7px 12px;
-    font-size: 13px;
-}
-
-
-/* Mobile */
-
-@media (max-width: 600px) {
-
-    .relationship-row {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .relationship-info {
-        display: block;
-        line-height: 1.7;
-    }
-
-    .delete-relationship-button {
-        width: 100%;
-    }
-
-}
-/* =========================================
-   COMPACT FAMILY MEMBER LIST
-   ========================================= */
-
-#membersList {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-
-/* MEMBER ROW */
-
-.member-card {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-
-    background: white;
-
-    padding: 10px 14px;
-
-    border-radius: 12px;
-
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-
-    transition: transform 0.2s ease,
-                box-shadow 0.2s ease;
-}
-
-
-.member-card:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 5px 15px rgba(0, 0, 0, 0.10);
-}
-
-
-/* PHOTO */
-
-.member-card-photo,
-.member-card-initials {
-
-    width: 55px;
-    height: 55px;
-
-    min-width: 55px;
-
-    border-radius: 50%;
-
-    object-fit: cover;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background: #f5f1e8;
-
-    color: #b8860b;
-
-    font-size: 20px;
-
-    font-weight: bold;
-}
-
-
-/* MEMBER INFORMATION */
-
-.member-card-content {
-
-    flex: 1;
-
-    min-width: 0;
-}
-
-
-.member-card h3 {
-
-    margin: 0 0 4px;
-
-    color: #3b2f2f;
-
-    font-size: 16px;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-}
-
-
-.member-card-info {
-
-    margin: 0;
-
-    color: #777;
-
-    font-size: 13px;
-
-    line-height: 1.4;
-}
-
-
-/* STATUS */
-
-.member-status {
-
-    display: inline-block;
-
-    padding: 3px 8px;
-
-    border-radius: 20px;
-
-    font-size: 11px;
-
-    font-weight: bold;
-
-    margin-top: 4px;
-
-    background: #f5f1e8;
-
-    color: #8f6808;
-}
-
-
-/* BUTTONS */
-
-.member-card-actions {
-
-    display: flex;
-
-    gap: 6px;
-
-    flex-shrink: 0;
-}
-
-
-.member-card-actions button {
-
-    padding: 7px 11px;
-
-    border-radius: 7px;
-
-    font-size: 12px;
-
-    margin: 0;
-}
-
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-    .member-card {
-
-        gap: 10px;
-
-        padding: 9px 10px;
-
-    }
-
-
-    .member-card-photo,
-    .member-card-initials {
-
-        width: 48px;
-
-        height: 48px;
-
-        min-width: 48px;
-
-        font-size: 17px;
-
-    }
-
-
-    .member-card h3 {
-
-        font-size: 14px;
-
-    }
-
-
-    .member-card-info {
-
-        font-size: 12px;
-
-    }
-
-
-    .member-card-actions {
-
-        flex-direction: column;
-
-        gap: 4px;
-
-    }
-
-
-    .member-card-actions button {
-
-        padding: 5px 8px;
-
-        font-size: 11px;
-
-    }
-
-}
-/* ================================= */
-/* COMPACT FAMILY MEMBERS LIST */
-/* ================================= */
-
-/* Scrollable members list */
-
-#membersList {
-    max-height: 420px;
-    overflow-y: auto;
-    padding: 5px;
-    background: #f8f5ed;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-}
-
-/* Individual member row */
-
-.member-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    background: white;
-    padding: 12px 15px;
-    margin-bottom: 8px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-
-/* Member information */
-
-.member-card-content {
-    flex: 1;
-    min-width: 0;
-}
-
-.member-card h3 {
-    color: #3b2f2f;
-    font-size: 14px;
-    margin: 0 0 5px;
-}
-
-.member-card-info {
-    color: #666;
-    font-size: 13px;
-    line-height: 1.6;
-    margin: 0;
-}
-
-/* Small member photo */
-
-.member-card-photo,
-.member-card-initials {
-    width: 42px;
-    height: 42px;
-    min-width: 42px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.member-card-initials {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f5f1e8;
-    color: #b8860b;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-/* Edit and Delete buttons */
-
-.member-card-actions {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-shrink: 0;
-}
-
-.member-card-actions button {
-    padding: 7px 10px;
-    font-size: 12px;
-    border-radius: 7px;
-    margin: 0;
-}
-
-/* Mobile layout */
-
-@media (max-width: 600px) {
-    .member-card {
-        gap: 8px;
-        padding: 10px;
-    }
-
-    .member-card-photo,
-    .member-card-initials {
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-    }
-
-    .member-card h3 {
-        font-size: 13px;
-        overflow-wrap: anywhere;
-    }
-
-    .member-card-info {
-        font-size: 12px;
-    }
-
-    .member-card-actions {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 4px;
-    }
-
-    .member-card-actions button {
-        padding: 6px 8px;
-        font-size: 11px;
-    }
-}
-/* ================================= */
-/* COMPACT ADMIN MEMBER LIST */
-/* ================================= */
-
-#membersList {
-    max-height: 420px;
-    overflow-y: auto;
-    padding: 5px;
-    background: #f8f5ed;
-    border-radius: 12px;
-}
-
-
-/* MEMBER ROW */
-
-.admin-member-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-
-    background: white;
-
-    padding: 10px 15px;
-
-    margin-bottom: 8px;
-
-    border-radius: 10px;
-
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-
-
-/* PHOTO */
-
-.admin-member-photo {
-    flex-shrink: 0;
-}
-
-
-.admin-member-photo img,
-.admin-member-placeholder {
-    width: 48px;
-    height: 48px;
-
-    border-radius: 50%;
-
-    object-fit: cover;
-}
-
-
-.admin-member-placeholder {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background: #f5f1e8;
-
-    color: #b8860b;
-
-    font-weight: bold;
-
-    font-size: 16px;
-}
-
-
-/* INFORMATION */
-
-.admin-member-info {
-    flex: 1;
-    min-width: 0;
-}
-
-
-.admin-member-info h3 {
-    margin: 0 0 3px;
-
-    color: #3b2f2f;
-
-    font-size: 15px;
-}
-
-
-.admin-member-info p {
-    margin: 0;
-
-    color: #777;
-
-    font-size: 12px;
-}
-
-
-/* STATUS */
-
-.admin-member-status {
-    display: inline-block;
-
-    margin-top: 3px;
-
-    padding: 2px 7px;
-
-    border-radius: 20px;
-
-    background: #f5f1e8;
-
-    color: #8f6808;
-
-    font-size: 10px;
-
-    font-weight: bold;
-}
-
-
-.admin-member-status.deceased {
-    background: #eee;
-
-    color: #777;
-}
-
-
-/* BUTTONS */
-
-.admin-member-actions {
-    display: flex;
-
-    gap: 6px;
-
-    flex-shrink: 0;
-}
-
-
-.admin-member-actions button {
-    padding: 6px 10px;
-
-    border-radius: 7px;
-
-    font-size: 12px;
-}
-
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-    .admin-member-row {
-        gap: 8px;
-
-        padding: 9px 10px;
-    }
-
-
-    .admin-member-photo img,
-    .admin-member-placeholder {
-        width: 40px;
-
-        height: 40px;
-    }
-
-
-    .admin-member-info h3 {
-        font-size: 13px;
-    }
-
-
-    .admin-member-info p {
-        font-size: 11px;
-    }
-
-
-    .admin-member-actions {
-        flex-direction: column;
-
-        gap: 4px;
-    }
-
-
-    .admin-member-actions button {
-        padding: 5px 8px;
-
-        font-size: 11px;
-    }
-
-}
-/* ================================= */
-/* ADMIN MEMBER VIEW MODAL */
-/* ================================= */
-
-.admin-member-view-modal {
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0, 0, 0, 0.65);
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    z-index: 9999;
-
-    overflow-y: auto;
-}
-
-
-/* POPUP CARD */
-
-.admin-member-view-content {
-    position: relative;
-
-    width: 100%;
-    max-width: 500px;
-
-    max-height: 90vh;
-
-    overflow-y: auto;
-
-    background: white;
-
-    border-radius: 20px;
-
-    padding: 25px;
-
-    text-align: center;
-
-    box-shadow:
-        0 15px 50px rgba(0, 0, 0, 0.25);
-
-    animation:
-        adminModalAppear 0.2s ease;
-}
-
-
-/* CLOSE BUTTON */
-
-.admin-member-view-close {
-    position: absolute;
-
-    top: 10px;
-    right: 12px;
-
-    width: 38px;
-    height: 38px;
-
-    border-radius: 50%;
-
-    border: none;
-
-    background: #3b2f2f;
-
-    color: white;
-
-    font-size: 24px;
-
-    line-height: 1;
-
-    cursor: pointer;
-
-    padding: 0;
-}
-
-
-/* PHOTO */
-
-.admin-view-member-photo {
-    width: 130px;
-    height: 130px;
-
-    border-radius: 50%;
-
-    object-fit: cover;
-
-    display: block;
-
-    margin: 10px auto 15px;
-}
-
-
-.admin-view-member-placeholder {
-    width: 130px;
-    height: 130px;
-
-    border-radius: 50%;
-
-    background: #f5f1e8;
-
-    color: #b8860b;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    margin: 10px auto 15px;
-
-    font-size: 40px;
-
-    font-weight: bold;
-}
-
-
-/* NAME */
-
-.admin-member-view-content h2 {
-    color: #3b2f2f;
-
-    font-size: 24px;
-
-    margin: 5px 0 10px;
-}
-
-
-/* STATUS */
-
-.admin-member-view-status {
-    display: inline-block;
-
-    padding: 5px 12px;
-
-    border-radius: 20px;
-
-    background: #f5f1e8;
-
-    color: #8f6808;
-
-    font-size: 12px;
-
-    font-weight: bold;
-
-    margin-bottom: 15px;
-}
-
-
-/* DETAILS */
-
-.admin-member-view-details {
-    background: #f8f5ed;
-
-    border-radius: 12px;
-
-    padding: 15px;
-
-    text-align: left;
-
-    margin-top: 10px;
-}
-
-
-.admin-member-view-details p {
-    margin: 8px 0;
-
-    color: #555;
-
-    font-size: 14px;
-
-    line-height: 1.6;
-}
-
-
-.admin-member-view-details strong {
-    color: #3b2f2f;
-}
-
-
-/* BIOGRAPHY */
-
-.admin-member-biography {
-    margin-top: 15px;
-
-    padding-top: 15px;
-
-    border-top: 1px solid #ddd;
-}
-
-
-.admin-member-biography strong {
-    display: block;
-
-    margin-bottom: 6px;
-
-    color: #3b2f2f;
-}
-
-
-/* ANIMATION */
-
-@keyframes adminModalAppear {
-
-    from {
-        opacity: 0;
-        transform: translateY(15px) scale(0.97);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
-}
-
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-    .admin-member-view-modal {
-        padding: 12px;
-    }
-
-    .admin-member-view-content {
-        padding: 20px 15px;
-
-        max-height: 92vh;
-    }
-
-    .admin-view-member-photo,
-    .admin-view-member-placeholder {
-        width: 105px;
-        height: 105px;
-    }
-
-    .admin-member-view-content h2 {
-        font-size: 20px;
-    }
-
-    }
-/* ================================= */
-/* FULLSCREEN MEMBER PHOTO */
-/* ================================= */
-
-.admin-photo-fullscreen {
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0, 0, 0, 0.92);
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    z-index: 10000;
-
-    cursor: pointer;
-}
-
-.admin-photo-fullscreen img {
-    max-width: 95%;
-    max-height: 90vh;
-
-    width: auto;
-    height: auto;
-
-    object-fit: contain;
-
-    border-radius: 12px;
-
-    box-shadow:
-        0 10px 40px rgba(0, 0, 0, 0.5);
-}
-/* ================================= */
-/* FAMILY RELATIONSHIP INFO */
-/* ================================= */
-
-.member-family-info {
-    background: white;
-
-    border-radius: 10px;
-
-    padding: 10px 12px;
-
-    margin-bottom: 12px;
-
-    border-left: 4px solid #b8860b;
-}
-
-.member-family-info strong {
-    display: block;
-
-    color: #3b2f2f;
-
-    font-size: 14px;
-
-    margin-bottom: 6px;
-}
-
-.member-family-info p {
-    margin: 4px 0;
-
-    color: #555;
-
-    font-size: 13px;
-}
-/* ================================= */
-/* CLICKABLE FAMILY MEMBERS */
-/* ================================= */
-
-.member-family-link {
-    display: block;
-    width: 100%;
-    padding: 7px 9px;
-    margin: 3px 0;
-    border: none;
-    background: #f8f5ed;
-    color: #8f6808;
-    text-align: left;
-    border-radius: 7px;
-    font-size: 13px;
-    cursor: pointer;
-}
-
-.member-family-link:hover {
-    background: #f5f1e8;
-}
-/* ================================= */
-/* HOW AM I RELATED BUTTON */
-/* ================================= */
-
-.find-relationship-button {
-    display: block;
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 11px 15px;
-    border: none;
-    border-radius: 10px;
-    background: #3b2f2f;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.find-relationship-button:hover {
-    background: #8f6808;
-}
-/* ================================= */
-/* FAMILY RELATIONSHIP RESULT */
-/* ================================= */
-
-.relationship-result-modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.65);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    z-index: 10001;
-}
-
-.relationship-result-card {
-    position: relative;
-    width: 100%;
-    max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-    background: white;
-    border-radius: 20px;
-    padding: 30px 20px;
-    text-align: center;
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
-    animation: relationshipAppear 0.25s ease;
-}
-
-.relationship-result-close {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    width: 38px;
-    height: 38px;
-    border: none;
-    border-radius: 50%;
-    background: #3b2f2f;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.relationship-result-card h2 {
-    color: #3b2f2f;
-    margin-bottom: 10px;
-}
-
-.relationship-result-intro {
-    color: #777;
-    margin-bottom: 5px;
-}
-
-.relationship-result-card h3 {
-    color: #b8860b;
-    margin-bottom: 20px;
-}
-
-.relationship-path {
-    background: #f8f5ed;
-    border-radius: 14px;
-    padding: 18px;
-    text-align: left;
-    line-height: 1.8;
-}
-
-@keyframes relationshipAppear {
-    from {
-        opacity: 0;
-        transform: scale(0.96) translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-@media (max-width: 600px) {
-
-    .relationship-result-modal {
-        padding: 12px;
-    }
-
-    .relationship-result-card {
-        padding: 25px 15px;
-        max-height: 92vh;
-    }
-
-    .relationship-result-card h2 {
-        font-size: 20px;
-    }
-}
-.relationship-path-person {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: white;
-    padding: 10px 12px;
-    margin-bottom: 8px;
-    border-radius: 10px;
-    border-left: 4px solid #b8860b;
-}
-
-.relationship-path-label {
-    min-width: 70px;
-    padding: 4px 8px;
-    border-radius: 20px;
-    background: #f5f1e8;
-    color: #8f6808;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.relationship-path-person strong {
-    color: #3b2f2f;
-    font-size: 14px;
-}
-/* =========================================
-   FAMILY TREE — ENHANCED HERITAGE DESIGN
-   ========================================= */
-
-/* Main tree area */
-
 .family-tree {
     position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
     padding: 35px 20px 50px;
-    max-width: 1400px;
-    margin: 0 auto;
 }
 
-
-/* =========================================
-   FOUNDING COUPLE
-   ========================================= */
-
-.family-tree .central-couple {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 25px;
-    flex-wrap: wrap;
-    padding: 25px;
-    margin-bottom: 15px;
-}
-
-
-/* Decorative line behind couple */
-
-.family-tree .central-couple::before {
-    content: "";
-    position: absolute;
-    width: 300px;
-    height: 2px;
-    background: #e7c98b;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 0;
-}
-
-
-/* Keep cards above decorative line */
-
-.family-tree .central-couple .member-card,
-.family-tree .marriage-symbol {
-    position: relative;
-    z-index: 1;
-}
-
-
-/* Marriage symbol */
-
-.family-tree .marriage-symbol {
-    width: 58px;
-    height: 58px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: white;
-    border: 3px solid #e7c98b;
-    border-radius: 50%;
-
-    font-size: 25px;
-
-    box-shadow:
-        0 6px 18px rgba(0, 0, 0, 0.12);
-}
-
-
-/* =========================================
-   TREE MEMBER CARDS
-   Scoped specifically to Family Tree
-   ========================================= */
-
-.family-tree .member-card {
-    display: block;
-    width: 100%;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff,
-            #fbf8f0
-        );
-
-    border: 2px solid #eadfc9;
-
-    border-radius: 20px;
-
-    padding: 20px 15px;
-
-    box-shadow:
-        0 8px 25px rgba(59, 47, 47, 0.10);
-
-    text-align: center;
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
-}
-
-
-.family-tree .member-card:hover {
-    transform: translateY(-7px);
-
-    border-color: #b8860b;
-
-    box-shadow:
-        0 15px 35px rgba(59, 47, 47, 0.18);
-}
-
-
-/* =========================================
-   PHOTOS
-   ========================================= */
-
-.family-tree .member-photo {
-    width: 105px;
-    height: 105px;
-
-    margin: 0 auto 14px;
-
-    border-radius: 50%;
-
-    overflow: hidden;
-
-    border: 4px solid #e7c98b;
-
-    background: #f5f1e8;
-
-    box-shadow:
-        0 5px 15px rgba(0, 0, 0, 0.12);
-}
-
-
-.family-tree .member-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-
-.family-tree .member-photo-placeholder {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 30px;
-    font-weight: bold;
-
-    color: #8f6808;
-}
-
-
-/* =========================================
-   MEMBER INFORMATION
-   ========================================= */
-
-.family-tree .member-info h4 {
-    color: #3b2f2f;
-
-    font-size: 17px;
-
-    line-height: 1.35;
-
-    margin-bottom: 8px;
-}
-
-
-.family-tree .member-relationship {
-    color: #8f6808;
-
-    font-size: 12px;
-
-    line-height: 1.5;
-
-    margin-bottom: 8px;
-}
-
-
-.family-tree .member-status {
-    display: inline-block;
-
-    padding: 5px 12px;
-
-    border-radius: 20px;
-
-    background: #e8f5e9;
-
-    color: #2e7d32;
-
-    font-size: 11px;
-
-    font-weight: bold;
-}
-
-
-/* =========================================
-   DECEASED MEMBERS
-   ========================================= */
-
-.family-tree .member-card.deceased {
-    border-color: #d2c9ba;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff,
-            #f1eee8
-        );
-}
-
-
-.family-tree .member-card.deceased .member-photo {
-    filter: grayscale(55%);
-
-    border-color: #c8c0b4;
-}
-
-
-.family-tree .member-card.deceased .member-status {
-    background: #e9e7e4;
-
-    color: #666;
-}
-
-
-/* =========================================
-   CONNECTOR FROM COUPLE TO CHILDREN
-   ========================================= */
-
-.family-tree .main-connector {
-    position: relative;
-
-    width: 3px;
-    height: 55px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #e7c98b,
-            #b8860b
-        );
-
-    margin: 0 auto 20px;
-
-    border-radius: 5px;
-}
-
-
-/* =========================================
-   GENERATION TITLE
-   ========================================= */
-
-.family-tree .generation-title {
-    display: inline-block;
-
-    position: relative;
-
-    padding: 10px 25px;
-
-    margin: 5px 0 35px;
-
-    background: #3b2f2f;
-
-    color: white;
-
-    border-radius: 30px;
-
-    font-size: 20px;
-
-    box-shadow:
-        0 6px 18px rgba(59, 47, 47, 0.15);
-}
-
-
-/* =========================================
-   CHILDREN BRANCHES
-   ========================================= */
-
-.family-tree .children-grid {
-    position: relative;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-
-    gap: 45px 25px;
-
-    max-width: 1250px;
-
-    margin: 0 auto;
-}
-
-
-/* Vertical branch above each child */
-
-.family-tree .child-wrapper {
-    position: relative;
-
-    padding-top: 25px;
-}
-
-
-/* Connector leading into child */
-
-.family-tree .child-wrapper::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 50%;
-
-    width: 2px;
-    height: 25px;
-
-    background: #e7c98b;
-
-    transform: translateX(-50%);
-}
-
-
-/* =========================================
-   EXPAND CHILDREN BUTTON
-   ========================================= */
-
-.family-tree .expand-family-button {
-    margin-top: 14px;
-
-    background: #3b2f2f;
-
-    color: white;
-
-    border: 2px solid #b8860b;
-
-    padding: 9px 17px;
-
-    border-radius: 25px;
-
-    font-size: 12px;
-
-    font-weight: bold;
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
-}
-
-
-.family-tree .expand-family-button:hover {
-    background: #8f6808;
-
-    transform: translateY(-2px);
-}
-
-
-/* =========================================
-   GRANDCHILDREN
-   ========================================= */
-
-.family-tree .grandchildren-container {
-    width: 100%;
-
-    margin-top: 20px;
-
-    padding: 20px 10px 5px;
-
-    border-top:
-        2px dashed #e7c98b;
-
-    background:
-        rgba(248, 245, 237, 0.7);
-
-    border-radius: 12px;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(165px, 1fr));
-
-    gap: 15px;
-}
-
-
-/* Grandchild cards */
-
-.family-tree
-.grandchildren-container
-.member-card {
-
-    padding: 15px;
-
-    border-radius: 16px;
-
-    box-shadow:
-        0 5px 15px rgba(0, 0, 0, 0.08);
-}
-
-
-.family-tree
-.grandchildren-container
-.member-photo {
-
-    width: 72px;
-    height: 72px;
-
-    border-width: 3px;
-}
-
-
-.family-tree
-.grandchildren-container
-.member-info h4 {
-
-    font-size: 14px;
-
-}
-
-
-/* =========================================
-   FAMILY TREE MOBILE DESIGN
-   ========================================= */
-
-@media (max-width: 600px) {
-
-    .family-tree {
-        padding: 20px 8px 35px;
-    }
-
-
-    .family-tree .central-couple {
-        flex-direction: column;
-
-        gap: 15px;
-
-        padding: 10px;
-    }
-
-
-    .family-tree .central-couple::before {
-        width: 2px;
-        height: 170px;
-
-        top: 50%;
-        left: 50%;
-
-        transform:
-            translate(-50%, -50%);
-    }
-
-
-    .family-tree .marriage-symbol {
-        width: 50px;
-        height: 50px;
-
-        font-size: 21px;
-    }
-
-
-    .family-tree .children-grid {
-        grid-template-columns: 1fr;
-
-        gap: 35px;
-
-        max-width: 360px;
-    }
-
-
-    .family-tree .child-wrapper {
-        padding-top: 20px;
-    }
-
-
-    .family-tree .member-card {
-        max-width: 340px;
-
-        margin: 0 auto;
-    }
-
-
-    .family-tree .member-photo {
-        width: 90px;
-        height: 90px;
-    }
-
-
-    .family-tree .generation-title {
-        font-size: 17px;
-
-        padding: 9px 18px;
-
-        margin-bottom: 25px;
-    }
-
-
-    .family-tree .grandchildren-container {
-        grid-template-columns: 1fr 1fr;
-
-        gap: 10px;
-
-        padding: 15px 8px;
-    }
-
-
-    .family-tree
-    .grandchildren-container
-    .member-card {
-
-        padding: 12px 7px;
-    }
-
-
-    .family-tree
-    .grandchildren-container
-    .member-photo {
-
-        width: 62px;
-        height: 62px;
-    }
-
-
-    .family-tree
-    .grandchildren-container
-    .member-info h4 {
-
-        font-size: 12px;
-
-    }
-
-
-    .family-tree
-    .grandchildren-container
-    .member-relationship {
-
-        font-size: 10px;
-
-    }
-
-}
-
-
-/* =========================================
-   VERY SMALL PHONES
-   ========================================= */
-
-@media (max-width: 380px) {
-
-    .family-tree
-    .grandchildren-container {
-
-        grid-template-columns: 1fr;
-    }
-
-}
-/* =========================================
-   FAMILY TREE — FAMILY BRANCH LEGEND
-   ========================================= */
-
-.family-branch-legend {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 25px auto 35px;
-    padding: 15px 20px;
-
-    max-width: 700px;
-
-    background: #fffdf8;
-    border: 1px solid #eadfc9;
-    border-radius: 18px;
-
-    box-shadow:
-        0 6px 20px rgba(59, 47, 47, 0.08);
-}
-
-.family-branch-legend-title {
-    width: 100%;
-    text-align: center;
-
-    font-size: 15px;
-    font-weight: bold;
-
-    color: #3b2f2f;
-
-    margin-bottom: 5px;
-}
-
-.family-branch-item {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-
-    padding: 7px 12px;
-
-    border-radius: 20px;
-
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.family-branch-main {
-    background: #f5ead0;
-    color: #7a5a0a;
-}
-
-.family-branch-previous {
-    background: #eeeae4;
-    color: #66605a;
-}
-
-.family-branch-dot {
-    width: 11px;
-    height: 11px;
-
-    border-radius: 50%;
-
-    display: inline-block;
-}
-
-.family-branch-main .family-branch-dot {
-    background: #b8860b;
-}
-
-.family-branch-previous .family-branch-dot {
-    background: #888;
-}
-
-
-/* Mobile */
-
-@media (max-width: 600px) {
-
-    .family-branch-legend {
-        margin: 20px 10px 25px;
-        padding: 13px 10px;
-    }
-
-    .family-branch-item {
-        font-size: 11px;
-        padding: 6px 10px;
-    }
-
-}
-/* =========================================
-   FAMILY BRANCH LABEL
-   ========================================= */
-
-.family-tree .member-branch {
-    display: inline-block;
-
-    margin-bottom: 8px;
-    padding: 5px 10px;
-
-    border-radius: 15px;
-
-    background: #f5ead0;
-    color: #7a5a0a;
-
-    font-size: 10px;
-    font-weight: bold;
-}
-/* =========================================
-   RECURSIVE MULTI-GENERATION FAMILY TREE
-   ========================================= */
-
-.recursive-family-tree {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-
-/* =========================================
-   GENERATION BRANCH
-   ========================================= */
-
-.generation-branch {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    margin-bottom: 35px;
-}
-
-
-/* =========================================
-   GENERATION CONNECTOR
-   ========================================= */
-
-.generation-connector {
-    width: 3px;
-    height: 40px;
-
-    margin: 5px auto 10px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #e7c98b,
-            #b8860b
-        );
-
-    border-radius: 5px;
-}
-
-
-/* =========================================
-   GENERATION LABEL
-   ========================================= */
-
-.generation-subtitle {
-    display: inline-block;
-
-    margin: 5px auto 20px;
-
-    padding: 7px 18px;
-
-    background: #3b2f2f;
-    color: white;
-
-    border-radius: 20px;
-
-    font-size: 13px;
-    font-weight: bold;
-
-    box-shadow:
-        0 5px 15px rgba(59, 47, 47, 0.12);
-}
-
-
-/* =========================================
-   CHILDREN OF EACH GENERATION
-   ========================================= */
-
-.generation-children {
-    position: relative;
-
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(210px, 1fr));
-
-    gap: 35px 22px;
-
-    max-width: 1250px;
-
-    margin: 0 auto;
-}
-
-
-/* =========================================
-   CHILD CONNECTION
-   ========================================= */
-
-.generation-children
-.generation-branch {
-    position: relative;
-
-    padding-top: 25px;
-}
-
-
-/* Vertical connector entering each child */
-
-.generation-children
-.generation-branch::before {
-
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 50%;
-
-    width: 2px;
-    height: 25px;
-
-    background: #e7c98b;
-
-    transform:
-        translateX(-50%);
-}
-
-
-/* =========================================
-   RECURSIVE MEMBER CARD
-   ========================================= */
-
-.recursive-family-tree
-.member-card {
-
-    width: 100%;
-    max-width: 270px;
-
-    margin: 0 auto;
-}
-
-
-/* =========================================
-   DEEP GENERATIONS
-   ========================================= */
-
-.generation-children
-.generation-children {
-
-    margin-top: 10px;
-}
-
-
-/* Slightly smaller cards for deeper levels */
-
-.generation-children
-.generation-children
-.member-card {
-
-    max-width: 230px;
-}
-
-
-/* =========================================
-   MOBILE FAMILY TREE
-   ========================================= */
-
-@media (max-width: 700px) {
-
-    .recursive-family-tree {
-        padding: 0 8px;
-    }
-
-
-    .generation-children {
-
-        grid-template-columns: 1fr;
-
-        gap: 25px;
-
-        max-width: 360px;
-    }
-
-
-    .generation-children
-    .generation-branch {
-
-        padding-top: 22px;
-    }
-
-
-    .generation-children
-    .generation-branch::before {
-
-        height: 22px;
-    }
-
-
-    .generation-subtitle {
-
-        font-size: 12px;
-
-        padding: 6px 15px;
-    }
-
-
-    .recursive-family-tree
-    .member-card {
-
-        max-width: 330px;
-    }
-
-}
-
-
-/* =========================================
-   VERY SMALL PHONES
-   ========================================= */
-
-@media (max-width: 380px) {
-
-    .generation-subtitle {
-
-        font-size: 11px;
-
-    }
-
-
-    .recursive-family-tree
-    .member-card {
-
-        max-width: 300px;
-
-    }
-
-}
-/* =========================================
-   COLLAPSIBLE FAMILY DESCENDANTS
-   ========================================= */
-
-.collapsible-descendants {
-    width: 100%;
-    margin-top: 18px;
-    padding-top: 18px;
-
-    border-top: 2px dashed #e7c98b;
-}
-
-
-/* =========================================
-   SHOW DESCENDANTS BUTTON
-   ========================================= */
-
-.show-descendants-button {
-    display: block;
-
-    margin: 15px auto 5px;
-
-    padding: 10px 20px;
-
-    border: 2px solid #b8860b;
-    border-radius: 30px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #3b2f2f,
-            #5a4545
-        );
-
-    color: white;
-
-    font-size: 12px;
-    font-weight: bold;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 6px 16px rgba(59, 47, 47, 0.15);
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        background 0.25s ease;
-}
-
-
-.show-descendants-button:hover {
-
-    transform: translateY(-3px);
-
-    background:
-        linear-gradient(
-            135deg,
-            #8f6808,
-            #b8860b
-        );
-
-    box-shadow:
-        0 10px 22px rgba(59, 47, 47, 0.20);
-}
-
-
-.show-descendants-button:active {
-
-    transform:
-        scale(0.96);
-
-}
-
-
-/* =========================================
-   DESCENDANT AREA
-   ========================================= */
-
-.collapsible-descendants
-.generation-children {
-
-    animation:
-        familyReveal 0.45s ease;
-
-}
-
-
-/* =========================================
-   BEAUTIFUL REVEAL
-   ========================================= */
-
-@keyframes familyReveal {
-
-    from {
-
-        opacity: 0;
-
-        transform:
-            translateY(-18px)
-            scale(0.97);
-
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform:
-            translateY(0)
-            scale(1);
-
-    }
-
-}
-
-
-/* =========================================
-   MOBILE
-   ========================================= */
-
-@media (max-width: 600px) {
-
-    .show-descendants-button {
-
-        font-size: 11px;
-
-        padding:
-            9px 16px;
-
-    }
-
-
-    .collapsible-descendants {
-
-        margin-top: 14px;
-
-        padding-top: 14px;
-
-    }
-
-}
-/* =========================================
-   BEAUTIFUL FIRST-GENERATION FAMILY TREE
-   ========================================= */
-
-.recursive-family-tree {
-    position: relative;
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px 10px 40px;
-}
-
-/* Horizontal family line above the 10 children */
-.recursive-family-tree::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 8%;
-    right: 8%;
-    height: 3px;
-    background: linear-gradient(
-        to right,
-        transparent,
-        #b8860b,
-        #e7c98b,
-        #b8860b,
-        transparent
-    );
-    border-radius: 10px;
-}
-
-/* First-generation children */
-.recursive-family-tree > .generation-branch {
-    position: relative;
-}
-
-/* Vertical connector from main family line */
-.recursive-family-tree > .generation-branch::before {
-    content: "";
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    width: 3px;
-    height: 20px;
-    background: #b8860b;
-    transform: translateX(-50%);
-    border-radius: 5px;
-}
-
-/* Keep the 10 children beautifully arranged */
-.recursive-family-tree {
-    display: grid;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(210px, 1fr)
-    );
-    gap: 45px 25px;
-}
-
-/* Make first-generation cards elegant */
-.recursive-family-tree > .generation-branch > .member-card {
-    position: relative;
-    z-index: 2;
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-}
-
-/* Gentle hover effect */
-.recursive-family-tree > .generation-branch > .member-card:hover {
-    transform: translateY(-6px);
-}
-
-/* Keep descendant controls below the card */
-.recursive-family-tree
-> .generation-branch
-> .show-descendants-button {
-    position: relative;
-    z-index: 3;
-}
-
-
-/* =========================================
-   MOBILE FAMILY TREE
-   ========================================= */
-
-@media (max-width: 700px) {
-
-    .recursive-family-tree {
-        grid-template-columns: 1fr;
-        gap: 35px;
-        padding: 20px 10px 30px;
-    }
-
-    .recursive-family-tree::before {
-        left: 50%;
-        right: auto;
-        width: 3px;
-        height: 100%;
-        background: linear-gradient(
-            to bottom,
-            transparent,
-            #b8860b,
-            #e7c98b,
-            #b8860b,
-            transparent
-        );
-        transform: translateX(-50%);
-    }
-
-    .recursive-family-tree
-    > .generation-branch::before {
-        display: none;
-    }
-
-    .recursive-family-tree
-    > .generation-branch {
-        z-index: 2;
-    }
-
-}
-/* =========================================
-   FIRST GENERATION — MAIN FAMILY BRANCHES
-   ========================================= */
-
-.recursive-family-tree > .generation-branch {
-    position: relative;
-    padding: 12px;
-    border-radius: 24px;
-    background: linear-gradient(
-        145deg,
-        rgba(255, 253, 248, 0.95),
-        rgba(247, 239, 220, 0.85)
-    );
-    border: 1px solid rgba(184, 134, 11, 0.18);
-    box-shadow:
-        0 8px 25px rgba(59, 47, 47, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease,
-        border-color 0.3s ease;
-}
-
-/* Elegant hover effect */
-
-.recursive-family-tree > .generation-branch:hover {
-    transform: translateY(-5px);
-    border-color: rgba(184, 134, 11, 0.45);
-    box-shadow:
-        0 14px 32px rgba(59, 47, 47, 0.14),
-        0 0 0 2px rgba(184, 134, 11, 0.06);
-}
-
-
-/* Small branch indicator */
-
-.recursive-family-tree
-> .generation-branch::after {
-    content: "🌿";
-    position: absolute;
-    top: 8px;
-    right: 10px;
-    font-size: 18px;
-    opacity: 0.65;
-}
-
-
-/* Keep member card clean inside branch */
-
-.recursive-family-tree
-> .generation-branch
-> .member-card {
-    border: none;
-    box-shadow: none;
-    background: transparent;
-}
-
-
-/* Explore button */
-
-.recursive-family-tree
-> .generation-branch
-> .show-descendants-button {
-    margin-top: 12px;
-    width: calc(100% - 10px);
-    max-width: 230px;
-    border-radius: 25px;
-    font-size: 11px;
-    letter-spacing: 0.2px;
-}
-
-
-/* =========================================
-   MOBILE
-   ========================================= */
-
-@media (max-width: 700px) {
-
-    .recursive-family-tree
-    > .generation-branch {
-        width: 100%;
-        max-width: 350px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .recursive-family-tree
-    > .generation-branch::after {
-        top: 10px;
-        right: 14px;
-    }
-
-}
-/* =========================================
-   SMOOTH DESCENDANT REVEAL
-   ========================================= */
-
-.collapsible-descendants {
-    overflow: hidden;
-    transform-origin: top center;
-}
-
-/* When descendants are displayed */
-
-.collapsible-descendants[style*="display: block"] {
-    animation: descendantsReveal 0.5s ease-out;
-}
-
-@keyframes descendantsReveal {
-
-    0% {
-        opacity: 0;
-        transform: translateY(-15px);
-    }
-
-    60% {
-        opacity: 0.75;
-        transform: translateY(4px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-
-/* =========================================
-   DESCENDANT BRANCHES
-   ========================================= */
-
-.collapsible-descendants
-.generation-branch {
-    animation: branchAppear 0.45s ease-out;
-}
-
-@keyframes branchAppear {
-
-    from {
-        opacity: 0;
-        transform: translateY(-10px) scale(0.97);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
-}
-
-
-/* =========================================
-   MOBILE
-   ========================================= */
-
-@media (max-width: 700px) {
-
-    .collapsible-descendants {
-        margin-top: 12px;
-        padding-top: 12px;
-    }
-
-}
-/* =========================================
-   GENERATION GUIDE
-   ========================================= */
+/* ---------- Generation guide ---------- */
 
 .generation-guide {
     width: calc(100% - 30px);
     max-width: 1050px;
     margin: 25px auto 35px;
     padding: 22px 20px;
-    background: linear-gradient(
-        145deg,
-        #fffdf8,
-        #f8f0df
-    );
+    background: linear-gradient(145deg, #fffdf8, #f8f0df);
     border: 1px solid rgba(184, 134, 11, 0.20);
     border-radius: 22px;
-    box-shadow:
-        0 8px 25px rgba(59, 47, 47, 0.07);
+    box-shadow: 0 8px 25px rgba(59, 47, 47, 0.07);
     text-align: center;
 }
 
 .generation-guide-title {
+    margin-bottom: 18px;
+    color: #3b2f2f;
     font-size: 17px;
     font-weight: bold;
-    color: #3b2f2f;
-    margin-bottom: 18px;
 }
 
 .generation-guide-steps {
@@ -3278,10 +373,10 @@ footer {
     background: white;
     border: 1px solid #eadfc9;
     border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(59, 47, 47, 0.05);
     color: #5a4545;
     font-size: 12px;
     font-weight: bold;
-    box-shadow: 0 4px 10px rgba(59, 47, 47, 0.05);
 }
 
 .generation-guide-icon {
@@ -3301,17 +396,467 @@ footer {
     line-height: 1.6;
 }
 
+/* ---------- Founding couple ---------- */
 
-/* =========================================
-   MOBILE GENERATION GUIDE
-   ========================================= */
+.central-couple {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-bottom: 15px;
+    padding: 25px;
+}
+
+.central-couple::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 2px;
+    background: #e7c98b;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+.central-couple .member-card,
+.marriage-symbol {
+    position: relative;
+    z-index: 1;
+}
+
+.marriage-symbol {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 3px solid #e7c98b;
+    border-radius: 50%;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    font-size: 25px;
+}
+
+.generation-title {
+    display: inline-block;
+    margin: 5px 0 35px;
+    padding: 10px 25px;
+    background: #3b2f2f;
+    color: white;
+    border-radius: 30px;
+    box-shadow: 0 6px 18px rgba(59, 47, 47, 0.15);
+    font-size: 20px;
+}
+
+/* ---------- Family member card ---------- */
+
+.member-card {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 20px 15px;
+    background: linear-gradient(145deg, #ffffff, #fbf8f0);
+    border: 2px solid #eadfc9;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(59, 47, 47, 0.10);
+    text-align: center;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.member-card:hover {
+    transform: translateY(-7px);
+    border-color: #b8860b;
+    box-shadow: 0 15px 35px rgba(59, 47, 47, 0.18);
+}
+
+.member-card:active {
+    transform: scale(0.98);
+}
+
+.member-photo {
+    width: 105px;
+    height: 105px;
+    margin: 0 auto 14px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f1e8;
+    border: 4px solid #e7c98b;
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.member-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.member-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #f4ead0, #e6d3a5);
+    border-radius: 50%;
+    color: #8f6808;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.member-info h4 {
+    margin: 0 0 8px;
+    color: #3b2f2f;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.member-relationship {
+    margin: 0 0 8px;
+    color: #8f6808;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.member-branch {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 5px 10px;
+    background: #f5ead0;
+    color: #7a5a0a;
+    border-radius: 15px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.member-status {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 5px 12px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c7dfc9;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+}
+
+/* Deceased members */
+
+.member-card.deceased {
+    background: linear-gradient(145deg, #ffffff, #f1eee8);
+    border-color: #d2c9ba;
+}
+
+.member-card.deceased .member-photo {
+    border-color: #c8c0b4;
+    filter: grayscale(55%);
+}
+
+.member-card.deceased .member-status {
+    background: #e9e7e4;
+    color: #666;
+    border-color: #d9d4ca;
+}
+
+/* ---------- Recursive multi-generation tree ---------- */
+
+/* The first generation is laid out as a grid of main family branches */
+
+.recursive-family-tree {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 45px 25px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 10px 40px;
+}
+
+/* Horizontal family line above the first generation */
+
+.recursive-family-tree::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 3px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        #b8860b,
+        #e7c98b,
+        #b8860b,
+        transparent
+    );
+    border-radius: 10px;
+}
+
+/* Every branch (a person plus their descendants) */
+
+.generation-branch {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 35px;
+}
+
+.generation-connector {
+    width: 3px;
+    height: 40px;
+    margin: 5px auto 10px;
+    background: linear-gradient(to bottom, #e7c98b, #b8860b);
+    border-radius: 5px;
+}
+
+.generation-subtitle {
+    display: inline-block;
+    margin: 5px auto 20px;
+    padding: 7px 18px;
+    background: #3b2f2f;
+    color: white;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(59, 47, 47, 0.12);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Member cards inside the recursive tree */
+
+.recursive-family-tree .member-card {
+    width: 100%;
+    max-width: 270px;
+    margin: 0 auto;
+}
+
+.generation-children .generation-children .member-card {
+    max-width: 230px;
+}
+
+/* First-generation branches are shown as framed panels */
+
+.recursive-family-tree > .generation-branch {
+    padding: 12px;
+    background: linear-gradient(
+        145deg,
+        rgba(255, 253, 248, 0.95),
+        rgba(247, 239, 220, 0.85)
+    );
+    border: 1px solid rgba(184, 134, 11, 0.18);
+    border-radius: 24px;
+    box-shadow:
+        0 8px 25px rgba(59, 47, 47, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.recursive-family-tree > .generation-branch:hover {
+    transform: translateY(-5px);
+    border-color: rgba(184, 134, 11, 0.45);
+    box-shadow:
+        0 14px 32px rgba(59, 47, 47, 0.14),
+        0 0 0 2px rgba(184, 134, 11, 0.06);
+}
+
+/* Vertical connector from the main family line */
+
+.recursive-family-tree > .generation-branch::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    width: 3px;
+    height: 20px;
+    background: #b8860b;
+    border-radius: 5px;
+    transform: translateX(-50%);
+}
+
+/* Small leaf decoration */
+
+.recursive-family-tree > .generation-branch::after {
+    content: "🌿";
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: 18px;
+    opacity: 0.65;
+}
+
+/* The card sits flat inside its framed panel */
+
+.recursive-family-tree > .generation-branch > .member-card {
+    position: relative;
+    z-index: 2;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    transition: transform 0.3s ease;
+}
+
+.recursive-family-tree > .generation-branch > .member-card:hover {
+    transform: translateY(-6px);
+}
+
+/* Children of any person */
+
+.generation-children {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 22px;
+    justify-items: center;
+    align-items: start;
+    width: 100%;
+    max-width: 1100px;
+    margin: 25px auto 0;
+    padding: 20px 10px;
+}
+
+.generation-children .generation-children {
+    margin-top: 10px;
+}
+
+.generation-children > .generation-branch {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    padding-top: 25px;
+}
+
+/* Vertical connector entering each child */
+
+.generation-children > .generation-branch::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 25px;
+    background: #e7c98b;
+    transform: translateX(-50%);
+}
+
+/* ---------- Show / hide descendants ---------- */
+
+.show-descendants-button {
+    position: relative;
+    z-index: 3;
+    display: block;
+    width: calc(100% - 10px);
+    max-width: 230px;
+    margin: 12px auto 5px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #3b2f2f, #5a4545);
+    color: white;
+    border: 2px solid #b8860b;
+    border-radius: 25px;
+    box-shadow: 0 6px 16px rgba(59, 47, 47, 0.15);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.show-descendants-button:hover {
+    background: linear-gradient(135deg, #8f6808, #b8860b);
+    box-shadow: 0 10px 22px rgba(59, 47, 47, 0.20);
+    transform: translateY(-3px);
+}
+
+.show-descendants-button:active {
+    transform: scale(0.96);
+}
+
+.collapsible-descendants {
+    width: 100%;
+    margin-top: 15px;
+    padding-top: 18px;
+    border-top: 2px dashed #e7c98b;
+    overflow: hidden;
+    transform-origin: top center;
+}
+
+.collapsible-descendants[style*="display: block"] {
+    animation: descendantsReveal 0.5s ease-out;
+}
+
+.collapsible-descendants .generation-children {
+    animation: familyReveal 0.45s ease;
+}
+
+.collapsible-descendants .generation-branch {
+    animation: branchAppear 0.45s ease-out;
+}
+
+/* ---------- Family tree: mobile ---------- */
 
 @media (max-width: 700px) {
 
+    .family-tree {
+        padding: 20px 8px 35px;
+    }
+
+    .central-couple {
+        flex-direction: column;
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .central-couple::before {
+        width: 2px;
+        height: 170px;
+    }
+
+    .marriage-symbol {
+        width: 50px;
+        height: 50px;
+        font-size: 21px;
+    }
+
+    .generation-title {
+        margin-bottom: 25px;
+        padding: 9px 18px;
+        font-size: 17px;
+    }
+
+    .generation-subtitle {
+        padding: 6px 15px;
+        font-size: 12px;
+    }
+
     .generation-guide {
         width: calc(100% - 20px);
-        padding: 18px 12px;
         margin: 20px auto 28px;
+        padding: 18px 12px;
     }
 
     .generation-guide-title {
@@ -3324,39 +869,459 @@ footer {
     }
 
     .generation-guide-arrow {
-        transform: rotate(90deg);
         font-size: 16px;
+        transform: rotate(90deg);
     }
 
     .generation-guide-step {
-        font-size: 11px;
         padding: 8px 13px;
+        font-size: 11px;
     }
 
     .generation-guide-note {
         font-size: 11px;
     }
 
+    .recursive-family-tree {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        padding: 20px 10px 30px;
+    }
+
+    /* Vertical family line instead of the horizontal one */
+    .recursive-family-tree::before {
+        left: 50%;
+        right: auto;
+        width: 3px;
+        height: 100%;
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            #b8860b,
+            #e7c98b,
+            #b8860b,
+            transparent
+        );
+        transform: translateX(-50%);
+    }
+
+    .recursive-family-tree > .generation-branch {
+        z-index: 2;
+        width: 100%;
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .recursive-family-tree > .generation-branch::before {
+        display: none;
+    }
+
+    .recursive-family-tree > .generation-branch::after {
+        top: 10px;
+        right: 14px;
+    }
+
+    .recursive-family-tree .member-card {
+        max-width: 330px;
+    }
+
+    .member-photo {
+        width: 90px;
+        height: 90px;
+    }
+
+    .collapsible-descendants {
+        padding-top: 12px;
+    }
 }
-/* =========================================
-   HOW AM I RELATED?
-   ========================================= */
+
+@media (max-width: 600px) {
+
+    .generation-children {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        padding: 15px 4px;
+    }
+
+    .generation-children > .generation-branch::before {
+        height: 22px;
+    }
+
+    .generation-children .member-card {
+        max-width: 100%;
+        padding: 14px 8px;
+    }
+
+    .generation-children .member-photo {
+        width: 65px;
+        height: 65px;
+    }
+
+    .generation-children .member-info h4 {
+        font-size: 13px;
+    }
+
+    .generation-children .member-relationship {
+        font-size: 10px;
+    }
+
+    .show-descendants-button {
+        padding: 9px 16px;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .generation-subtitle {
+        font-size: 11px;
+    }
+
+    .recursive-family-tree .member-card {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 340px) {
+
+    .generation-children {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ==========================================================================
+   06. MEMBER BIOGRAPHY POPUP + PHOTO VIEWER
+   ========================================================================== */
+
+.member-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 9999;
+}
+
+.member-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    padding: 35px 25px;
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    overflow-y: auto;
+    animation: memberModalOpen 0.3s ease;
+}
+
+.close-member-modal {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: #3b2f2f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.close-member-modal:hover {
+    background: #b8860b;
+}
+
+.modal-member-photo {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eee7d7;
+    border: 5px solid #e7c98b;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.modal-member-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-member-placeholder {
+    color: #8f6808;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.modal-member-name {
+    margin-bottom: 10px;
+    color: #2d241c;
+    font-size: 28px;
+}
+
+.modal-member-relationship {
+    margin-bottom: 15px;
+    color: #8f6808;
+    font-weight: bold;
+}
+
+.modal-member-status {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 7px 15px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.modal-member-status.deceased {
+    background: #eee;
+    color: #666;
+}
+
+.modal-member-biography {
+    margin-top: 10px;
+    padding-top: 20px;
+    color: #444;
+    border-top: 1px solid #eee;
+    line-height: 1.8;
+    text-align: left;
+}
+
+.modal-member-biography-title {
+    margin-bottom: 10px;
+    color: #3b2f2f;
+    font-size: 18px;
+}
+
+/* Family connections inside the popup */
+
+.modal-member-connections {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.modal-member-connections > h2 {
+    margin-bottom: 20px;
+    color: #80552b;
+    text-align: center;
+}
+
+.member-connection-section {
+    margin: 15px 0;
+    padding: 14px;
+    background: #fffaf0;
+    border: 1px solid #eadfce;
+    border-radius: 12px;
+}
+
+.member-connection-section h3 {
+    margin: 0 0 10px;
+    color: #80552b;
+    font-size: 16px;
+}
+
+.member-connection-section p {
+    margin: 5px 0;
+    line-height: 1.6;
+}
+
+.member-connection-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.member-connection-list li {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.member-connection-link {
+    padding: 2px 0;
+    background: transparent;
+    color: #2563eb;
+    border: none;
+    border-radius: 0;
+    font: inherit;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+}
+
+.member-connection-link:hover {
+    background: transparent;
+    text-decoration: underline;
+}
+
+/* Family relationship summary + clickable relatives */
+
+.member-family-info {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    background: white;
+    border-left: 4px solid #b8860b;
+    border-radius: 10px;
+}
+
+.member-family-info strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #3b2f2f;
+    font-size: 14px;
+}
+
+.member-family-info p {
+    margin: 4px 0;
+    color: #555;
+    font-size: 13px;
+}
+
+.member-family-link {
+    display: block;
+    width: 100%;
+    margin: 3px 0;
+    padding: 7px 9px;
+    background: #f8f5ed;
+    color: #8f6808;
+    border: none;
+    border-radius: 7px;
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.member-family-link:hover {
+    background: #f5f1e8;
+}
+
+/* Full-screen family photo viewer */
+
+#familyPhotoViewer {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.96);
+    z-index: 100000;
+}
+
+#familyPhotoViewerImage {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 82%;
+    max-height: 82dvh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.12);
+}
+
+#closeFamilyPhotoViewer {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    width: 46px;
+    height: 46px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 100001;
+}
+
+#closeFamilyPhotoViewer:active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#familyPhotoViewerName {
+    max-width: 100%;
+    margin-top: 18px;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+
+    .member-modal {
+        padding: 15px;
+    }
+
+    .member-modal-content {
+        max-height: 92vh;
+        padding: 30px 20px;
+    }
+
+    .modal-member-photo {
+        width: 125px;
+        height: 125px;
+    }
+
+    .modal-member-name {
+        font-size: 23px;
+    }
+
+    #familyPhotoViewer {
+        padding: 12px;
+    }
+
+    #familyPhotoViewerImage {
+        max-width: 100%;
+        max-height: 78dvh;
+    }
+
+    #closeFamilyPhotoViewer {
+        top: 12px;
+        right: 12px;
+    }
+
+    #familyPhotoViewerName {
+        font-size: 16px;
+    }
+}
+
+
+/* ==========================================================================
+   07. HOW AM I RELATED?
+   ========================================================================== */
 
 .relationship-explorer {
     width: calc(100% - 30px);
     max-width: 900px;
     margin: 35px auto 45px;
     padding: 30px 25px;
-    text-align: center;
-    background: linear-gradient(
-        145deg,
-        #fffdf8,
-        #f7eedc
-    );
+    background: linear-gradient(145deg, #fffdf8, #f7eedc);
     border: 1px solid rgba(184, 134, 11, 0.20);
     border-radius: 28px;
-    box-shadow:
-        0 12px 35px rgba(59, 47, 47, 0.09);
+    box-shadow: 0 12px 35px rgba(59, 47, 47, 0.09);
+    text-align: center;
 }
 
 .relationship-explorer-icon {
@@ -3369,9 +1334,8 @@ footer {
     background: #3b2f2f;
     border: 3px solid #e7c98b;
     border-radius: 50%;
+    box-shadow: 0 6px 18px rgba(59, 47, 47, 0.15);
     font-size: 24px;
-    box-shadow:
-        0 6px 18px rgba(59, 47, 47, 0.15);
 }
 
 .relationship-explorer h2 {
@@ -3386,12 +1350,17 @@ footer {
     font-size: 13px;
 }
 
-.relationship-form {
+/* Two dropdowns side by side (scoped so it does not affect the admin form) */
+
+.relationship-explorer .relationship-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 18px;
     max-width: 750px;
     margin: 0 auto;
+    padding: 0;
+    background: transparent;
+    border: none;
 }
 
 .relationship-field {
@@ -3400,7 +1369,7 @@ footer {
 
 .relationship-field label {
     display: block;
-    margin-bottom: 7px;
+    margin: 0 0 7px;
     color: #5a4545;
     font-size: 12px;
     font-weight: bold;
@@ -3409,10 +1378,10 @@ footer {
 .relationship-field select {
     width: 100%;
     padding: 12px 14px;
-    border: 1px solid #dfd1b8;
-    border-radius: 14px;
     background: white;
     color: #3b2f2f;
+    border: 1px solid #dfd1b8;
+    border-radius: 14px;
     font-size: 13px;
     outline: none;
     cursor: pointer;
@@ -3423,8 +1392,7 @@ footer {
 
 .relationship-field select:focus {
     border-color: #b8860b;
-    box-shadow:
-        0 0 0 3px rgba(184, 134, 11, 0.10);
+    box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.10);
 }
 
 .find-relationship-button {
@@ -3432,19 +1400,14 @@ footer {
     justify-self: center;
     margin-top: 5px;
     padding: 12px 28px;
+    background: linear-gradient(135deg, #3b2f2f, #5a4545);
+    color: white;
     border: 2px solid #b8860b;
     border-radius: 30px;
-    background: linear-gradient(
-        135deg,
-        #3b2f2f,
-        #5a4545
-    );
-    color: white;
+    box-shadow: 0 7px 18px rgba(59, 47, 47, 0.15);
     font-size: 13px;
     font-weight: bold;
     cursor: pointer;
-    box-shadow:
-        0 7px 18px rgba(59, 47, 47, 0.15);
     transition:
         transform 0.25s ease,
         box-shadow 0.25s ease,
@@ -3452,24 +1415,16 @@ footer {
 }
 
 .find-relationship-button:hover {
+    background: linear-gradient(135deg, #8f6808, #b8860b);
+    box-shadow: 0 11px 25px rgba(59, 47, 47, 0.20);
     transform: translateY(-3px);
-    background: linear-gradient(
-        135deg,
-        #8f6808,
-        #b8860b
-    );
-    box-shadow:
-        0 11px 25px rgba(59, 47, 47, 0.20);
 }
 
 .find-relationship-button:active {
     transform: scale(0.96);
 }
 
-
-/* =========================================
-   RELATIONSHIP RESULT
-   ========================================= */
+/* Result area */
 
 .relationship-result {
     max-width: 750px;
@@ -3480,70 +1435,28 @@ footer {
     display: none;
 }
 
-
-/* =========================================
-   MOBILE
-   ========================================= */
-
-@media (max-width: 700px) {
-
-    .relationship-explorer {
-        width: calc(100% - 20px);
-        padding: 25px 15px;
-        border-radius: 22px;
-    }
-
-    .relationship-explorer h2 {
-        font-size: 21px;
-    }
-
-    .relationship-form {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .find-relationship-button {
-        grid-column: auto;
-        width: 100%;
-    }
-
-}
-/* =========================================
-   HOW AM I RELATED — RESULT
-========================================= */
-
 .relationship-message {
     padding: 16px 18px;
-    border-radius: 16px;
     background: #fffdf8;
-    border: 1px solid #eadfc9;
     color: #5a4545;
+    border: 1px solid #eadfc9;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(59, 47, 47, 0.07);
     font-size: 13px;
     line-height: 1.6;
-    box-shadow:
-        0 6px 18px rgba(59, 47, 47, 0.07);
 }
 
 .relationship-message.success {
-    background: linear-gradient(
-        145deg,
-        #fffdf8,
-        #f8f0df
-    );
+    background: linear-gradient(145deg, #fffdf8, #f8f0df);
     border-color: rgba(184, 134, 11, 0.30);
 }
 
 .relationship-path-card {
     padding: 25px 20px;
-    background: linear-gradient(
-        145deg,
-        #fffdf8,
-        #f7eedc
-    );
+    background: linear-gradient(145deg, #fffdf8, #f7eedc);
     border: 1px solid rgba(184, 134, 11, 0.22);
     border-radius: 22px;
-    box-shadow:
-        0 10px 28px rgba(59, 47, 47, 0.09);
+    box-shadow: 0 10px 28px rgba(59, 47, 47, 0.09);
     animation: relationshipAppear 0.5s ease-out;
 }
 
@@ -3564,6 +1477,11 @@ footer {
     flex-direction: column;
     align-items: center;
     gap: 7px;
+    padding: 18px;
+    background: #f8f5ed;
+    border-radius: 14px;
+    line-height: 1.8;
+    text-align: left;
 }
 
 .relationship-path-member {
@@ -3573,11 +1491,10 @@ footer {
     gap: 12px;
     padding: 12px 15px;
     background: white;
+    color: #3b2f2f;
     border: 1px solid #eadfc9;
     border-radius: 16px;
-    color: #3b2f2f;
-    box-shadow:
-        0 5px 14px rgba(59, 47, 47, 0.06);
+    box-shadow: 0 5px 14px rgba(59, 47, 47, 0.06);
     transition:
         transform 0.25s ease,
         box-shadow 0.25s ease;
@@ -3585,8 +1502,11 @@ footer {
 
 .relationship-path-member:hover {
     transform: translateY(-3px);
-    box-shadow:
-        0 8px 20px rgba(59, 47, 47, 0.11);
+    box-shadow: 0 8px 20px rgba(59, 47, 47, 0.11);
+}
+
+.relationship-path-member strong {
+    font-size: 13px;
 }
 
 .relationship-path-number {
@@ -3604,10 +1524,6 @@ footer {
     font-weight: bold;
 }
 
-.relationship-path-member strong {
-    font-size: 13px;
-}
-
 .relationship-path-line {
     color: #b8860b;
     font-size: 22px;
@@ -3616,25 +1532,109 @@ footer {
     animation: relationshipArrow 1s ease-in-out infinite alternate;
 }
 
-@keyframes relationshipAppear {
-    from {
-        opacity: 0;
-        transform: translateY(15px) scale(0.98);
-    }
+/* Older popup version of the result (kept in case your JS still uses it) */
 
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+.relationship-result-modal {
+    position: fixed;
+    inset: 0;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 10001;
 }
 
-@keyframes relationshipArrow {
-    from {
-        transform: translateY(-2px);
+.relationship-result-card {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    padding: 30px 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    overflow-y: auto;
+    animation: relationshipAppear 0.25s ease;
+}
+
+.relationship-result-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 38px;
+    height: 38px;
+    background: #3b2f2f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.relationship-result-card h2 {
+    margin-bottom: 10px;
+    color: #3b2f2f;
+}
+
+.relationship-result-intro {
+    margin-bottom: 5px;
+    color: #777;
+}
+
+.relationship-result-card h3 {
+    margin-bottom: 20px;
+    color: #b8860b;
+}
+
+.relationship-path-person {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding: 10px 12px;
+    background: white;
+    border-left: 4px solid #b8860b;
+    border-radius: 10px;
+}
+
+.relationship-path-label {
+    min-width: 70px;
+    padding: 4px 8px;
+    background: #f5f1e8;
+    color: #8f6808;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.relationship-path-person strong {
+    color: #3b2f2f;
+    font-size: 14px;
+}
+
+@media (max-width: 700px) {
+
+    .relationship-explorer {
+        width: calc(100% - 20px);
+        padding: 25px 15px;
+        border-radius: 22px;
     }
 
-    to {
-        transform: translateY(3px);
+    .relationship-explorer h2 {
+        font-size: 21px;
+    }
+
+    .relationship-explorer .relationship-form {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .find-relationship-button {
+        grid-column: auto;
+        width: 100%;
     }
 }
 
@@ -3667,26 +1667,38 @@ footer {
     .relationship-path-line {
         font-size: 19px;
     }
-                              }
-/* =========================================
-   FAMILY ANNALS
-   ========================================= */
 
-.family-annals-section {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 40px 20px 70px;
+    .relationship-result-modal {
+        padding: 12px;
+    }
+
+    .relationship-result-card {
+        max-height: 92vh;
+        padding: 25px 15px;
+    }
+
+    .relationship-result-card h2 {
+        font-size: 20px;
+    }
 }
 
 
-/* =========================================
-   INTRODUCTION
-   ========================================= */
+/* ==========================================================================
+   08. FAMILY ANNALS (TIMELINE)
+   ========================================================================== */
+
+.family-annals-section {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 30px 20px;
+}
+
+/* Introduction */
 
 .annals-introduction {
-    text-align: center;
-    max-width: 700px;
+    max-width: 750px;
     margin: 0 auto 55px;
+    text-align: center;
 }
 
 .annals-icon {
@@ -3696,265 +1708,35 @@ footer {
     width: 70px;
     height: 70px;
     margin-bottom: 18px;
-    background: linear-gradient(
-        145deg,
-        #3b2f2f,
-        #5a4545
-    );
+    background: linear-gradient(145deg, #3b2f2f, #5a4545);
     border: 3px solid #e7c98b;
     border-radius: 50%;
+    box-shadow: 0 8px 22px rgba(59, 47, 47, 0.18);
     font-size: 30px;
-    box-shadow:
-        0 8px 22px rgba(59, 47, 47, 0.18);
+}
+
+.annals-introduction h1 {
+    margin-bottom: 18px;
+    color: var(--royal-green);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.2;
+    letter-spacing: -1px;
 }
 
 .annals-introduction h2 {
     margin: 0 0 12px;
-    color: #3b2f2f;
+    color: var(--royal-green);
     font-size: 30px;
 }
 
 .annals-introduction p {
     margin: 0;
     color: #77706a;
-    font-size: 15px;
-    line-height: 1.8;
-}
-
-
-/* =========================================
-   TIMELINE
-   ========================================= */
-
-.family-annals-timeline {
-    position: relative;
-    max-width: 850px;
-    margin: 0 auto;
-    padding: 20px 0;
-}
-
-
-/* Central timeline line */
-
-.family-annals-timeline::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 32px;
-    width: 2px;
-    background: linear-gradient(
-        to bottom,
-        #e7c98b,
-        #b8860b,
-        #e7c98b
-    );
-}
-
-
-/* =========================================
-   EVENT
-   ========================================= */
-
-.annals-event {
-    position: relative;
-    display: flex;
-    gap: 22px;
-    margin-bottom: 35px;
-}
-
-
-/* =========================================
-   NUMBER MARKER
-   ========================================= */
-
-.annals-marker {
-    position: relative;
-    z-index: 2;
-    width: 64px;
-    min-width: 64px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #3b2f2f;
-    border: 4px solid #f3dfb0;
-    border-radius: 50%;
-    box-shadow:
-        0 6px 18px rgba(59, 47, 47, 0.15);
-}
-
-.annals-marker span {
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-
-/* =========================================
-   EVENT CARD
-   ========================================= */
-
-.annals-event-card {
-    flex: 1;
-    padding: 25px;
-    background: linear-gradient(
-        145deg,
-        #fffdf8,
-        #f8f0df
-    );
-    border: 1px solid rgba(
-        184,
-        134,
-        11,
-        0.22
-    );
-    border-radius: 22px;
-    box-shadow:
-        0 8px 25px rgba(
-            59,
-            47,
-            47,
-            0.08
-        );
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-.annals-event-card:hover {
-    transform: translateY(-4px);
-    box-shadow:
-        0 14px 32px rgba(
-            59,
-            47,
-            47,
-            0.13
-        );
-}
-
-
-/* =========================================
-   YEAR
-   ========================================= */
-
-.annals-event-year {
-    display: inline-block;
-    margin-bottom: 12px;
-    padding: 6px 12px;
-    background: #3b2f2f;
-    color: #f3dfb0;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-
-/* =========================================
-   EVENT CONTENT
-   ========================================= */
-
-.annals-event-content {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-}
-
-.annals-event-details {
-    flex: 1;
-}
-
-
-/* =========================================
-   EVENT TYPE
-   ========================================= */
-
-.annals-event-type {
-    display: inline-block;
-    margin-bottom: 7px;
-    color: #b8860b;
-    font-size: 11px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-}
-
-
-/* =========================================
-   EVENT TITLE
-   ========================================= */
-
-.annals-event-details h3 {
-    margin: 0 0 12px;
-    color: #3b2f2f;
-    font-size: 21px;
-}
-
-
-/* =========================================
-   DATE
-   ========================================= */
-
-.annals-event-date {
-    margin-bottom: 8px;
-    color: #77706a;
-    font-size: 12px;
-}
-
-
-/* =========================================
-   PERSON
-   ========================================= */
-
-.annals-event-person {
-    margin-bottom: 13px;
-    color: #5a4545;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-
-/* =========================================
-   DESCRIPTION
-   ========================================= */
-
-.annals-event-details p {
-    margin: 0;
-    color: #655e58;
-    font-size: 14px;
-    line-height: 1.8;
-}
-
-/* ==========================================
-   FAMILY ANNALS — HISTORICAL ARCHIVE DESIGN
-   ========================================== */
-
-.family-annals-section {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 30px 20px;
-}
-
-.annals-introduction {
-    max-width: 750px;
-    margin: 0 auto 55px;
-    text-align: center;
-}
-
-.annals-introduction h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    line-height: 1.2;
-    margin-bottom: 18px;
-    letter-spacing: -1px;
-}
-
-.annals-introduction p {
     font-size: 1.05rem;
     line-height: 1.9;
-    opacity: 0.85;
 }
 
-/* Timeline container */
+/* Timeline container with centre line */
 
 .family-annals-timeline {
     position: relative;
@@ -3963,8 +1745,6 @@ footer {
     padding: 10px 0;
 }
 
-/* Central timeline line */
-
 .family-annals-timeline::before {
     content: "";
     position: absolute;
@@ -3972,26 +1752,19 @@ footer {
     bottom: 0;
     left: 50%;
     width: 3px;
-    transform: translateX(-50%);
-    background: linear-gradient(
-        to bottom,
-        #d6a84f,
-        #b88635,
-        #e8d5a8
-    );
+    background: linear-gradient(to bottom, #d6a84f, #b88635, #e8d5a8);
     border-radius: 10px;
+    transform: translateX(-50%);
 }
 
-/* Timeline event */
+/* Each event: odd on the left, even on the right */
 
 .annals-event {
     position: relative;
     width: 50%;
+    margin-bottom: 35px;
     padding: 15px 40px 35px;
-    box-sizing: border-box;
 }
-
-/* Alternate cards on both sides */
 
 .annals-event:nth-child(odd) {
     left: 0;
@@ -4003,18 +1776,24 @@ footer {
     text-align: left;
 }
 
-/* Timeline markers */
+/* Timeline dot (the number inside is hidden) */
 
 .annals-marker {
     position: absolute;
     top: 27px;
     width: 18px;
+    min-width: 18px;
     height: 18px;
+    padding: 0;
+    background: var(--heritage-gold);
     border: 4px solid #fff;
     border-radius: 50%;
-    background: #c49a45;
-    box-shadow: 0 0 0 3px #c49a4540;
+    box-shadow: 0 0 0 3px rgba(196, 154, 69, 0.25);
     z-index: 2;
+}
+
+.annals-marker span {
+    display: none;
 }
 
 .annals-event:nth-child(odd) .annals-marker {
@@ -4025,19 +1804,19 @@ footer {
     left: -9px;
 }
 
-/* Historical event cards */
+/* Event card */
 
 .annals-event-card {
     position: relative;
     padding: 25px;
+    background: #fffdf8;
     border: 1px solid #e7dfce;
     border-radius: 18px;
-    background: #fffdf8;
     box-shadow: 0 8px 25px rgba(35, 29, 18, 0.08);
+    overflow: hidden;
     transition:
         transform 0.25s ease,
         box-shadow 0.25s ease;
-    overflow: hidden;
 }
 
 .annals-event-card:hover {
@@ -4045,52 +1824,92 @@ footer {
     box-shadow: 0 15px 35px rgba(35, 29, 18, 0.14);
 }
 
-/* Event year and date */
-
 .annals-event-year {
     display: inline-block;
     margin-bottom: 12px;
     padding: 7px 13px;
-    border-radius: 20px;
     background: #f5ecd8;
     color: #77551b;
+    border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 700;
 }
 
+/* ★ FIX: photo ABOVE the text, on every screen size ★ */
+
 .annals-event-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+    width: 100%;
+    min-width: 0;
     line-height: 1.8;
     overflow-wrap: anywhere;
 }
 
-.annals-event-content h2,
-.annals-event-content h3 {
-    margin-top: 8px;
-    margin-bottom: 12px;
-    line-height: 1.4;
-}
-
-/* Historical photographs */
-
 .annals-event-image {
     display: block;
     width: 100%;
+    max-width: 100%;
+    height: auto;
     max-height: 280px;
-    margin: 18px 0;
-    border-radius: 12px;
-    object-fit: cover;
+    margin: 0;
     background: #f1eee7;
+    border-radius: 12px;
+    object-fit: contain;
 }
 
-/* Featured historical events */
+.annals-event-details {
+    display: block;
+    flex: none;
+    width: 100%;
+    min-width: 0;
+}
+
+.annals-event-type {
+    display: inline-block;
+    margin-bottom: 7px;
+    color: #b8860b;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.annals-event-details h3 {
+    margin: 8px 0 12px;
+    color: #3b2f2f;
+    font-size: 21px;
+    line-height: 1.4;
+}
+
+.annals-event-date {
+    margin-bottom: 8px;
+    color: #77706a;
+    font-size: 12px;
+}
+
+.annals-event-person {
+    margin-bottom: 13px;
+    color: #5a4545;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.annals-event-details p {
+    margin: 0;
+    color: #655e58;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: normal;
+}
+
+/* Featured events */
 
 .annals-event-highlighted .annals-event-card {
+    background: linear-gradient(145deg, #fffdf7, #fff7e5);
     border: 2px solid #c49a45;
-    background: linear-gradient(
-        145deg,
-        #fffdf7,
-        #fff7e5
-    );
 }
 
 .annals-event-highlighted .annals-event-card::before {
@@ -4110,68 +1929,21 @@ footer {
     max-width: 650px;
     margin: 35px auto;
     padding: 35px 20px;
+    background: #fffdf8;
     border: 1px dashed #c9b88e;
     border-radius: 16px;
-    background: #fffdf8;
-    text-align: center;
     line-height: 1.8;
+    text-align: center;
 }
 
-/* Mobile phone layout */
-
-@media (max-width: 650px) {
-
-    .family-annals-section {
-        margin: 20px auto;
-        padding: 25px 14px;
-    }
-
-    .annals-introduction {
-        margin-bottom: 35px;
-    }
-
-    .family-annals-timeline::before {
-        left: 12px;
-        transform: none;
-    }
-
-    .annals-event,
-    .annals-event:nth-child(odd),
-    .annals-event:nth-child(even) {
-        left: 0;
-        width: 100%;
-        padding: 10px 0 25px 38px;
-        text-align: left;
-    }
-
-    .annals-event:nth-child(odd) .annals-marker,
-    .annals-event:nth-child(even) .annals-marker {
-        left: 4px;
-        right: auto;
-    }
-
-    .annals-event-card {
-        padding: 18px;
-        border-radius: 14px;
-    }
-
-    .annals-event-image {
-        max-height: 240px;
-    }
-
-    .annals-event-content {
-        font-size: 0.96rem;
-    }
-    }
-/* ==========================================
-   ANNALS MEMBER PROFILE POPUP
-   ========================================== */
+/* Clickable member name inside an event */
 
 .annals-member-link {
-    border: none;
     padding: 0;
     background: transparent;
     color: #8b641d;
+    border: none;
+    border-radius: 0;
     font: inherit;
     font-weight: 700;
     text-decoration: underline;
@@ -4180,32 +1952,28 @@ footer {
 }
 
 .annals-member-link:hover {
+    background: transparent;
     color: #3b241b;
 }
 
-/* Family member profile overlay */
+/* Member profile popup opened from the annals */
+
 #annalsMemberPopup {
     position: fixed !important;
     top: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
     left: 0 !important;
-
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    box-sizing: border-box;
-
-    z-index: 2147483647 !important;
-
+    padding: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    padding: 18px;
-    overflow-y: auto;
-
     background: rgba(35, 25, 18, 0.75);
+    overflow-y: auto;
+    z-index: 2147483647 !important;
 }
 
 .annals-member-popup-card {
@@ -4213,14 +1981,14 @@ footer {
     width: 100%;
     max-width: 480px;
     max-height: 90vh;
-    overflow-y: auto;
     padding: 28px;
-    border: 1px solid #e7dfce;
-    border-radius: 18px;
     background: #fffdf8;
     color: #382920;
+    border: 1px solid #e7dfce;
+    border-radius: 18px;
     box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
     line-height: 1.8;
+    overflow-y: auto;
 }
 
 .annals-member-popup-card h2,
@@ -4244,81 +2012,23 @@ footer {
     float: right;
     width: 38px;
     height: 38px;
-    border: none;
-    border-radius: 50%;
     background: #3b241b;
     color: white;
+    border: none;
+    border-radius: 50%;
     font-size: 26px;
     cursor: pointer;
-    }
-/* Family connections inside member profile popup */
-.modal-member-connections {
-margin-top: 25px;
-padding-top: 15px;
-border-top: 1px solid #e5e7eb;
 }
 
-.modal-member-connections > h2 {
-color: #80552b;
-text-align: center;
-margin-bottom: 20px;
-}
-
-.member-connection-section {
-margin: 15px 0;
-padding: 14px;
-background: #fffaf0;
-border: 1px solid #eadfce;
-border-radius: 12px;
-}
-
-.member-connection-section h3 {
-margin: 0 0 10px;
-color: #80552b;
-font-size: 16px;
-}
-
-.member-connection-section p {
-margin: 5px 0;
-line-height: 1.6;
-}
-
-.member-connection-list {
-list-style: none;
-padding: 0;
-margin: 0;
-}
-
-.member-connection-list li {
-margin: 8px 0;
-line-height: 1.6;
-}
-
-.member-connection-link {
-border: none;
-background: transparent;
-color: #2563eb;
-font: inherit;
-font-weight: 600;
-padding: 2px 0;
-cursor: pointer;
-text-align: left;
-}
-
-.member-connection-link:hover {
-text-decoration: underline;
-    }
-/* =========================================
-   FAMILY ANNALS — IMPROVED MOBILE TIMELINE
-========================================= */
+/* Annals: mobile (timeline line on the left, everything stacked) */
 
 @media (max-width: 800px) {
 
     .family-annals-section {
         width: 100%;
         max-width: 100%;
+        margin: 20px auto;
         padding: 35px 15px 55px;
-        box-sizing: border-box;
     }
 
     .annals-introduction {
@@ -4331,65 +2041,36 @@ text-decoration: underline;
         line-height: 1.4;
     }
 
-    /* Move timeline line to the left */
-
     .family-annals-timeline::before {
         left: 12px;
-        width: 3px;
         transform: none;
     }
-
-    /* Stack all historical events vertically */
 
     .annals-event,
     .annals-event:nth-child(odd),
     .annals-event:nth-child(even) {
-        display: block;
-        position: relative;
         left: 0;
         width: 100%;
         padding: 10px 0 25px 42px;
         text-align: left;
-        box-sizing: border-box;
     }
 
-    /* Correct timeline marker dimensions */
-
-    .annals-marker,
     .annals-event:nth-child(odd) .annals-marker,
     .annals-event:nth-child(even) .annals-marker {
-        position: absolute;
-        top: 27px;
-        left: 3px;
+        left: 4px;
         right: auto;
-
-        width: 18px;
-        min-width: 18px;
-        height: 18px;
-
-        padding: 0;
-        border: 4px solid #fff;
-        border-radius: 50%;
-        background: var(--heritage-gold);
-        box-shadow: 0 0 0 3px rgba(196, 154, 69, 0.2);
     }
-
-    .annals-marker span {
-        display: none;
-    }
-
-    /* Historical event cards */
 
     .annals-event-card {
         width: 100%;
+        max-width: 100%;
+        min-width: 0;
         padding: 20px;
-        box-sizing: border-box;
         border-radius: 16px;
-        background: #fffdf8;
     }
 
-    .annals-event-content {
-        display: block;
+    .annals-event-image {
+        max-height: 260px;
     }
 
     .annals-event-details h3 {
@@ -4397,22 +2078,13 @@ text-decoration: underline;
         line-height: 1.5;
     }
 
-    .annals-event-details p {
-        font-size: 14px;
-        line-height: 1.8;
+    .annals-event-person {
+        display: inline-block;
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
     }
-
-    .annals-event-image {
-        width: 100%;
-        max-height: 240px;
-        object-fit: cover;
-    }
-
 }
-
-/* =========================================
-   SMALL PHONE ADJUSTMENTS
-========================================= */
 
 @media (max-width: 380px) {
 
@@ -4427,775 +2099,933 @@ text-decoration: underline;
     .annals-event-person {
         font-size: 12px;
     }
-
 }
-/* =========================================
-FAMILY HERITAGE ADMIN DASHBOARD LAYOUT
-Safe layout improvements
-========================================= */
+
+
+/* ==========================================================================
+   09. ADMIN DASHBOARD
+   ========================================================================== */
 
 .admin-section {
-width: 100%;
-max-width: 1200px;
-margin: 25px auto;
-padding: 20px;
-box-sizing: border-box;
+    width: 100%;
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 20px;
 }
 
 .admin-section > h2 {
-margin-bottom: 8px;
-color: #3b2f2f;
+    margin-bottom: 8px;
 }
 
 .admin-intro {
-margin-bottom: 25px;
-line-height: 1.6;
-color: #666;
+    margin-bottom: 25px;
+    color: #666;
+    line-height: 1.6;
 }
 
-/* Dashboard statistics */
+/* Statistics */
 
 .admin-stats {
-display: grid;
-grid-template-columns: repeat(3, minmax(0, 1fr));
-gap: 16px;
-margin: 20px 0 30px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin: 20px 0 30px;
 }
 
 .admin-stat-card {
-min-width: 0;
-padding: 20px 12px;
-text-align: center;
-background: #fff;
-border: 1px solid #eee7d8;
-border-radius: 14px;
-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
-box-sizing: border-box;
+    min-width: 0;
+    padding: 20px 12px;
+    background: #fff;
+    border: 1px solid #eee7d8;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    text-align: center;
 }
 
 .admin-stat-card h3 {
-margin: 0 0 8px;
-color: #8f6808;
-font-size: 28px;
+    margin: 0 0 8px;
+    color: #8f6808;
+    font-size: 28px;
 }
 
 .admin-stat-card p {
-margin: 0;
-color: #555;
-font-size: 13px;
+    margin: 0;
+    color: #555;
+    font-size: 13px;
 }
 
-/* Consistent dashboard panels */
+/* Panels */
 
 .admin-panel,
 .annals-admin-panel,
 .recorded-relationships-section,
 .admin-form-container {
-box-sizing: border-box;
-width: 100%;
-margin: 0 0 25px;
-padding: 22px;
-background: #fff;
-border: 1px solid #eee7d8;
-border-radius: 16px;
-box-shadow: 0 4px 16px rgba(0, 0, 0, 0.045);
+    width: 100%;
+    margin: 0 0 25px;
+    padding: 22px;
+    background: #fff;
+    border: 1px solid #eee7d8;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.045);
 }
 
 .admin-panel-header,
 .admin-form-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-flex-wrap: wrap;
-gap: 15px;
-margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 18px;
 }
 
 .admin-panel-header h2,
 .admin-form-header h2 {
-margin: 0 0 6px;
-color: #3b2f2f;
+    margin: 0 0 6px;
+    color: #3b2f2f;
 }
 
 .admin-panel-header p {
-margin: 0;
-color: #777;
-line-height: 1.5;
+    margin: 0;
+    color: #777;
+    line-height: 1.5;
 }
 
-/* Search field */
-
 .admin-search {
-margin: 15px 0;
+    margin: 15px 0;
 }
 
 .admin-search input {
-width: 100%;
-box-sizing: border-box;
-padding: 12px 14px;
-border: 1px solid #ddd5c5;
-border-radius: 9px;
-font-size: 15px;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ddd5c5;
+    border-radius: 9px;
+    font-size: 15px;
 }
 
-/* Relationship and parent-management sections */
+/* Parent / relationship management form */
 
 .relationship-form {
-box-sizing: border-box;
-width: 100%;
-margin: 0 0 20px;
-padding: 20px;
-background: #f8f5ed;
-border: 1px solid #eee7d8;
-border-radius: 12px;
+    width: 100%;
+    margin: 0 0 20px;
+    padding: 20px;
+    background: #f8f5ed;
+    border: 1px solid #eee7d8;
+    border-radius: 12px;
 }
 
+.relationship-form h3,
+.relationship-list-section h3,
 .recorded-relationships-section h3 {
-margin-top: 0;
-color: #3b2f2f;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #3b2f2f;
 }
+
+.relationship-form label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: bold;
+}
+
+.relationship-form select {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.relationship-list-section {
+    margin-top: 25px;
+}
+
+/* Scrollable lists */
 
 #relationshipsList,
 #membersList {
-max-height: 420px;
-overflow-y: auto;
-overscroll-behavior: contain;
-padding: 8px;
-background: #f8f5ed;
-border: 1px solid #eee7d8;
-border-radius: 12px;
-box-sizing: border-box;
+    max-height: 420px;
+    padding: 8px;
+    background: #f8f5ed;
+    border: 1px solid #eee7d8;
+    border-radius: 12px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+#membersList {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
 }
 
 #membersList > *,
 #relationshipsList > * {
-box-sizing: border-box;
-max-width: 100%;
-}
-
-/* Mobile layout */
-
-@media (max-width: 600px) {
-.admin-section {
-margin: 12px auto;
-padding: 12px;
-}
-
-.admin-stats {
-    gap: 8px;
-    margin: 15px 0 22px;
-}
-
-.admin-stat-card {
-    padding: 15px 5px;
-    border-radius: 10px;
-}
-
-.admin-stat-card h3 {
-    font-size: 22px;
-}
-
-.admin-stat-card p {
-    font-size: 11px;
-    overflow-wrap: anywhere;
-}
-
-.admin-panel,
-.annals-admin-panel,
-.recorded-relationships-section,
-.admin-form-container {
-    padding: 15px;
-    margin-bottom: 18px;
-    border-radius: 12px;
-}
-
-.admin-panel-header {
-    align-items: flex-start;
-}
-
-.admin-panel-header h2,
-.admin-form-header h2 {
-    font-size: 19px;
-}
-
-.relationship-form {
-    padding: 14px;
-}
-
-    }
-/* =========================================
-FULL-SCREEN FAMILY PHOTO VIEWER
-========================================= */
-
-#familyPhotoViewer {
-display: none;
-position: fixed;
-inset: 0;
-width: 100%;
-height: 100%;
-height: 100dvh;
-z-index: 100000;
-background: rgba(0, 0, 0, 0.96);
-align-items: center;
-justify-content: center;
-flex-direction: column;
-padding: 20px;
-box-sizing: border-box;
-}
-
-#familyPhotoViewerImage {
-display: block;
-max-width: 100%;
-max-height: 82%;
-max-height: 82dvh;
-width: auto;
-height: auto;
-object-fit: contain;
-border-radius: 8px;
-box-shadow: 0 0 25px rgba(255, 255, 255, 0.12);
-}
-
-#closeFamilyPhotoViewer {
-position: absolute;
-top: 15px;
-right: 20px;
-width: 46px;
-height: 46px;
-border: none;
-border-radius: 50%;
-background: rgba(255, 255, 255, 0.15);
-color: white;
-font-size: 36px;
-line-height: 1;
-cursor: pointer;
-z-index: 100001;
-}
-
-#closeFamilyPhotoViewer:active {
-background: rgba(255, 255, 255, 0.3);
-}
-
-#familyPhotoViewerName {
-color: white;
-font-size: 18px;
-text-align: center;
-margin-top: 18px;
-max-width: 100%;
-overflow-wrap: anywhere;
-}
-
-@media (max-width: 600px) {
-#familyPhotoViewer {
-padding: 12px;
-}
-
-#familyPhotoViewerImage {
     max-width: 100%;
-    max-height: 78dvh;
 }
 
-#closeFamilyPhotoViewer {
-    top: 12px;
-    right: 12px;
-}
+/* A recorded relationship row */
 
-#familyPhotoViewerName {
-    font-size: 16px;
-}
-
-}
-/* =========================================
-   ACTUAL RECURSIVE FAMILY TREE LAYOUT
-========================================= */
-
-/* Individual family branches */
-.generation-branch {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    width: 100%;
-    min-width: 0;
-
-    box-sizing: border-box;
-}
-
-/* Arrange siblings side by side */
-.generation-children {
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(190px, 1fr));
-
-    gap: 22px;
-
-    width: 100%;
-    max-width: 1100px;
-
-    margin: 25px auto 0;
-    padding: 20px 10px;
-
-    box-sizing: border-box;
-
-    justify-items: center;
-    align-items: start;
-}
-
-/* Keep each child branch organized */
-.generation-children > .generation-branch {
-    width: 100%;
-    min-width: 0;
-}
-
-/* Descendant expansion area */
-.collapsible-descendants {
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 15px;
-}
-
-/* Mobile layout */
-@media (max-width: 600px) {
-
-    .generation-children {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-        gap: 12px;
-
-        padding: 15px 4px;
-    }
-
-    .generation-children .member-card {
-        width: 100%;
-        max-width: 100%;
-
-        padding: 14px 8px;
-    }
-
-    .generation-children .member-photo {
-        width: 65px;
-        height: 65px;
-    }
-
-    .generation-children .member-info h4 {
-        font-size: 13px;
-    }
-
-    .generation-children .member-relationship {
-        font-size: 10px;
-    }
-
-}
-
-/* Very narrow phones */
-@media (max-width: 340px) {
-
-    .generation-children {
-        grid-template-columns: 1fr;
-    }
-
-}
-    
-/* =========================================
-   OUR FAMILY HERITAGE
-   ROYAL HERITAGE DESIGN THEME
-========================================= */
-
-:root {
-    --royal-green: #123d2b;
-    --deep-green: #092c1e;
-    --heritage-gold: #c49a45;
-    --light-gold: #e8d4a4;
-    --warm-ivory: #faf7ef;
-    --pure-white: #ffffff;
-    --heritage-text: #26352b;
-    --muted-text: #77796f;
-}
-
-/* GLOBAL WEBSITE APPEARANCE */
-
-body {
-    font-family: Georgia, "Times New Roman", serif;
-    background: var(--warm-ivory);
-    color: var(--heritage-text);
-    line-height: 1.6;
-}
-
-main {
-    background: var(--warm-ivory);
-}
-
-/* =========================================
-   PREMIUM WEBSITE HEADER
-========================================= */
-
-header.site-header {
-    background: linear-gradient(
-        135deg,
-        var(--deep-green),
-        var(--royal-green)
-    );
-
-    color: white;
-    padding: 25px 20px 20px;
-    border-bottom: 4px solid var(--heritage-gold);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-}
-
-.header-content {
-    max-width: 1250px;
-    margin: auto;
+.relationship-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 25px;
+    gap: 15px;
+    margin-bottom: 8px;
+    padding: 12px 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.relationship-info {
+    display: flex;
+    align-items: center;
     flex-wrap: wrap;
-}
-
-.site-brand h1 {
-    color: var(--light-gold);
-    font-size: clamp(25px, 4vw, 36px);
-    margin: 0;
-    letter-spacing: 1px;
-}
-
-.site-brand p {
-    color: #eee3c9;
-    margin: 5px 0 0;
+    gap: 8px;
     font-size: 14px;
 }
 
-/* =========================================
-   MAIN NAVIGATION
-========================================= */
+.relationship-info strong {
+    color: #3b2f2f;
+}
 
-.main-navigation {
+.relationship-info span {
+    color: #b8860b;
+    font-weight: bold;
+}
+
+.delete-relationship-button {
+    flex-shrink: 0;
+    padding: 7px 12px;
+    font-size: 13px;
+}
+
+/* Compact member row — version 1 (used inside #membersList) */
+
+#membersList .member-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 8px;
+    padding: 12px 15px;
+    background: white;
+    border: 1px solid #eee7d8;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    text-align: left;
+}
+
+#membersList .member-card:hover {
+    transform: translateY(-2px);
+    border-color: #b8860b;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.10);
+}
+
+#membersList .member-card-content {
+    flex: 1;
+    min-width: 0;
+}
+
+#membersList .member-card h3 {
+    margin: 0 0 5px;
+    color: #3b2f2f;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#membersList .member-card-info {
+    margin: 0;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+#membersList .member-status {
+    padding: 3px 8px;
+    background: #f5f1e8;
+    color: #8f6808;
+    border-color: #eadfc9;
+}
+
+.member-card-photo,
+.member-card-initials {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.member-card-initials {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.main-navigation a {
-    display: inline-block;
-    padding: 10px 17px;
-    border-radius: 25px;
-    color: white;
-    text-decoration: none;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    transition: 0.25s ease;
-}
-
-.main-navigation a:hover,
-.main-navigation a.active {
-    background: var(--heritage-gold);
-    color: var(--deep-green);
-}
-
-/* =========================================
-   PREMIUM FOOTER
-========================================= */
-
-footer.site-footer {
-    background: var(--deep-green);
-    color: white;
-    padding: 28px 20px;
-    border-top: 3px solid var(--heritage-gold);
-    text-align: center;
-}
-
-.site-footer p {
-    margin: 5px 0 10px;
-    color: #eee3c9;
-}
-
-.site-footer a {
-    color: var(--light-gold);
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.site-footer a:hover {
-    text-decoration: underline;
-}
-
-/* =========================================
-   HOMEPAGE WELCOME SECTION
-========================================= */
-
-.welcome {
-    max-width: 1050px;
-    padding: 65px 30px;
-    background: linear-gradient(
-        135deg,
-        var(--deep-green),
-        var(--royal-green)
-    );
-    color: white;
-    border: 1px solid var(--heritage-gold);
-    border-radius: 22px;
-    box-shadow: 0 15px 35px rgba(9, 44, 30, 0.16);
-}
-
-.welcome h2 {
-    color: var(--light-gold);
-    font-size: clamp(27px, 4vw, 38px);
-}
-
-.welcome p {
-    color: #f3ead8;
-}
-
-/* Homepage buttons */
-
-.explore-button {
-    display: inline-block;
-    padding: 13px 25px;
-    background: var(--heritage-gold);
-    color: var(--deep-green);
-    text-decoration: none;
-    border-radius: 30px;
-    font-family: Arial, sans-serif;
-    font-weight: 700;
-    transition: 0.25s ease;
-}
-
-.explore-button:hover {
-    background: var(--light-gold);
-    transform: translateY(-2px);
-}
-
-/* Homepage feature cards */
-
-.home-sections {
-    max-width: 1050px;
-    margin: 35px auto;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px;
-}
-
-.home-card {
-    background: white;
-    padding: 28px;
-    border: 1px solid #e6dcc5;
-    border-left: 4px solid var(--heritage-gold);
-    border-radius: 16px;
-    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
-}
-
-.home-card h3 {
-    color: var(--royal-green);
-}
-
-.home-card a {
-    color: #987020;
+    background: #f5f1e8;
+    color: #b8860b;
+    font-size: 15px;
     font-weight: bold;
-    text-decoration: none;
 }
 
-/* =========================================
-   SECTION HEADINGS
-========================================= */
-
-.family-tree-section > h2,
-.family-annals-section h2,
-.admin-section > h2 {
-    color: var(--royal-green);
+.member-card-actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 6px;
 }
 
-.generation-title {
-    color: var(--royal-green);
+.member-card-actions button {
+    margin: 0;
+    padding: 7px 10px;
+    border-radius: 7px;
+    font-size: 12px;
 }
 
-/* =========================================
-   PREMIUM BUTTON APPEARANCE
-========================================= */
+/* Compact member row — version 2 (.admin-member-row) */
 
-button {
-    background: var(--royal-green);
+.admin-member-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 8px;
+    padding: 10px 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.admin-member-photo {
+    flex-shrink: 0;
+}
+
+.admin-member-photo img,
+.admin-member-placeholder {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.admin-member-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f1e8;
+    color: #b8860b;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.admin-member-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-member-info h3 {
+    margin: 0 0 3px;
+    color: #3b2f2f;
+    font-size: 15px;
+}
+
+.admin-member-info p {
+    margin: 0;
+    color: #777;
+    font-size: 12px;
+}
+
+.admin-member-status {
+    display: inline-block;
+    margin-top: 3px;
+    padding: 2px 7px;
+    background: #f5f1e8;
+    color: #8f6808;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.admin-member-status.deceased {
+    background: #eee;
+    color: #777;
+}
+
+.admin-member-actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: 6px;
+}
+
+.admin-member-actions button {
+    padding: 6px 10px;
+    border-radius: 7px;
+    font-size: 12px;
+}
+
+/* Admin: member detail popup */
+
+.admin-member-view-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.65);
+    overflow-y: auto;
+    z-index: 9999;
+}
+
+.admin-member-view-content {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    padding: 25px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    overflow-y: auto;
+    animation: adminModalAppear 0.2s ease;
+}
+
+.admin-member-view-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 38px;
+    height: 38px;
+    background: #3b2f2f;
     color: white;
-    transition: background 0.2s ease;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
 }
 
-button:hover {
-    background: var(--deep-green);
+.admin-view-member-photo {
+    display: block;
+    width: 130px;
+    height: 130px;
+    margin: 10px auto 15px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-/* Primary admin buttons */
-
-.admin-primary-button {
-    background: var(--royal-green);
-    border: 1px solid var(--heritage-gold);
+.admin-view-member-placeholder {
+    width: 130px;
+    height: 130px;
+    margin: 10px auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f1e8;
+    color: #b8860b;
+    border-radius: 50%;
+    font-size: 40px;
+    font-weight: bold;
 }
 
-.admin-primary-button:hover {
-    background: var(--deep-green);
+.admin-member-view-content h2 {
+    margin: 5px 0 10px;
+    color: #3b2f2f;
+    font-size: 24px;
 }
 
-/* =========================================
-   PREMIUM FORM ELEMENTS
-========================================= */
-
-input,
-select,
-textarea {
-    accent-color: var(--royal-green);
+.admin-member-view-status {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 5px 12px;
+    background: #f5f1e8;
+    color: #8f6808;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-    outline: none;
-    border-color: var(--heritage-gold);
-    box-shadow: 0 0 0 3px rgba(196, 154, 69, 0.15);
+.admin-member-view-details {
+    margin-top: 10px;
+    padding: 15px;
+    background: #f8f5ed;
+    border-radius: 12px;
+    text-align: left;
 }
 
-/* =========================================
-   MOBILE RESPONSIVENESS
-========================================= */
+.admin-member-view-details p {
+    margin: 8px 0;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+}
 
-@media (max-width: 700px) {
+.admin-member-view-details strong {
+    color: #3b2f2f;
+}
 
-    .header-content {
+.admin-member-biography {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.admin-member-biography strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #3b2f2f;
+}
+
+/* Admin: full-screen photo */
+
+.admin-photo-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.92);
+    cursor: pointer;
+    z-index: 10000;
+}
+
+.admin-photo-fullscreen img {
+    width: auto;
+    height: auto;
+    max-width: 95%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Admin: mobile */
+
+@media (max-width: 600px) {
+
+    .admin-section {
+        margin: 12px auto;
+        padding: 12px;
+    }
+
+    .admin-stats {
+        gap: 8px;
+        margin: 15px 0 22px;
+    }
+
+    .admin-stat-card {
+        padding: 15px 5px;
+        border-radius: 10px;
+    }
+
+    .admin-stat-card h3 {
+        font-size: 22px;
+    }
+
+    .admin-stat-card p {
+        font-size: 11px;
+        overflow-wrap: anywhere;
+    }
+
+    .admin-panel,
+    .annals-admin-panel,
+    .recorded-relationships-section,
+    .admin-form-container {
+        margin-bottom: 18px;
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .admin-panel-header {
+        align-items: flex-start;
+    }
+
+    .admin-panel-header h2,
+    .admin-form-header h2 {
+        font-size: 19px;
+    }
+
+    .relationship-form {
+        padding: 14px;
+    }
+
+    .relationship-row {
         flex-direction: column;
-        text-align: center;
-        gap: 18px;
+        align-items: flex-start;
     }
 
-    .main-navigation {
+    .relationship-info {
+        display: block;
+        line-height: 1.7;
+    }
+
+    .delete-relationship-button {
         width: 100%;
-        gap: 5px;
     }
 
-    .main-navigation a {
-        padding: 9px 12px;
+    #membersList .member-card {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    #membersList .member-card h3 {
         font-size: 13px;
     }
 
-    .home-sections {
-        grid-template-columns: 1fr;
-        margin: 20px 10px;
+    #membersList .member-card-info {
+        font-size: 12px;
     }
 
-    .welcome {
-        padding: 40px 20px;
-        margin: 20px auto;
+    .member-card-photo,
+    .member-card-initials {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
     }
 
-    header.site-header {
-        padding: 22px 12px;
+    .member-card-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
     }
 
+    .member-card-actions button {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+
+    .admin-member-row {
+        gap: 8px;
+        padding: 9px 10px;
+    }
+
+    .admin-member-photo img,
+    .admin-member-placeholder {
+        width: 40px;
+        height: 40px;
+    }
+
+    .admin-member-info h3 {
+        font-size: 13px;
+    }
+
+    .admin-member-info p {
+        font-size: 11px;
+    }
+
+    .admin-member-actions {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .admin-member-actions button {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+
+    .admin-member-view-modal {
+        padding: 12px;
+    }
+
+    .admin-member-view-content {
+        max-height: 92vh;
+        padding: 20px 15px;
+    }
+
+    .admin-view-member-photo,
+    .admin-view-member-placeholder {
+        width: 105px;
+        height: 105px;
+    }
+
+    .admin-member-view-content h2 {
+        font-size: 20px;
+    }
 }
+
+
+/* ==========================================================================
+   10. LEGACY TREE CLASSES
+   Older two-level tree (children-grid / grandchildren-container) and the
+   branch legend. Delete this whole section if nothing in your HTML or
+   JavaScript still uses these class names.
+   ========================================================================== */
+
+.main-connector {
+    width: 3px;
+    height: 55px;
+    margin: 0 auto 20px;
+    background: linear-gradient(to bottom, #e7c98b, #b8860b);
+    border-radius: 5px;
+}
+
+.children-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 45px 25px;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+.child-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.child-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 25px;
+    background: #e7c98b;
+    transform: translateX(-50%);
+}
+
+.expand-family-button {
+    margin-top: 14px;
+    padding: 9px 17px;
+    background: #3b2f2f;
+    color: white;
+    border: 2px solid #b8860b;
+    border-radius: 25px;
+    font-size: 12px;
+    font-weight: bold;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.expand-family-button:hover {
+    background: #8f6808;
+    transform: translateY(-2px);
+}
+
+.grandchildren-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+    gap: 15px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 20px auto 0;
+    padding: 20px 10px 5px;
+    background: rgba(248, 245, 237, 0.7);
+    border-top: 2px dashed #e7c98b;
+    border-radius: 12px;
+}
+
+.grandchildren-container > .child-wrapper {
+    width: 100%;
+    min-width: 0;
+}
+
+.grandchildren-container .member-card {
+    min-width: 0;
+    padding: 15px;
+    border-radius: 16px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.grandchildren-container .member-photo {
+    width: 75px;
+    height: 75px;
+    margin-bottom: 12px;
+}
+
+.grandchildren-container .member-info h4 {
+    font-size: 15px;
+}
+
+/* Branch legend */
+
+.family-branch-legend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 700px;
+    margin: 25px auto 35px;
+    padding: 15px 20px;
+    background: #fffdf8;
+    border: 1px solid #eadfc9;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(59, 47, 47, 0.08);
+}
+
+.family-branch-legend-title {
+    width: 100%;
+    margin-bottom: 5px;
+    color: #3b2f2f;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.family-branch-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.family-branch-main {
+    background: #f5ead0;
+    color: #7a5a0a;
+}
+
+.family-branch-previous {
+    background: #eeeae4;
+    color: #66605a;
+}
+
+.family-branch-dot {
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+}
+
+.family-branch-main .family-branch-dot {
+    background: #b8860b;
+}
+
+.family-branch-previous .family-branch-dot {
+    background: #888;
+}
+
+@media (max-width: 600px) {
+
+    .children-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        max-width: 360px;
+    }
+
+    .children-grid .member-card {
+        max-width: 340px;
+        margin: 0 auto;
+    }
+
+    .grandchildren-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        padding: 15px 4px 8px;
+    }
+
+    .grandchildren-container .member-card {
+        padding: 12px 7px;
+    }
+
+    .grandchildren-container .member-photo {
+        width: 62px;
+        height: 62px;
+    }
+
+    .grandchildren-container .member-info h4 {
+        font-size: 12px;
+    }
+
+    .grandchildren-container .member-relationship {
+        font-size: 10px;
+    }
+
+    .family-branch-legend {
+        margin: 20px 10px 25px;
+        padding: 13px 10px;
+    }
+
+    .family-branch-item {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 340px) {
+
+    .grandchildren-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ==========================================================================
+   11. ANIMATIONS
+   ========================================================================== */
+
+@keyframes memberModalOpen {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes adminModalAppear {
+    from { opacity: 0; transform: translateY(15px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes relationshipAppear {
+    from { opacity: 0; transform: translateY(15px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes relationshipArrow {
+    from { transform: translateY(-2px); }
+    to   { transform: translateY(3px); }
+}
+
+@keyframes familyReveal {
+    from { opacity: 0; transform: translateY(-18px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes branchAppear {
+    from { opacity: 0; transform: translateY(-10px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes descendantsReveal {
+    0%   { opacity: 0;    transform: translateY(-15px); }
+    60%  { opacity: 0.75; transform: translateY(4px); }
+    100% { opacity: 1;    transform: translateY(0); }
+}
+
+
+/* ==========================================================================
+   12. REDUCED MOTION
+   ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
 
-    .main-navigation a,
-    .explore-button,
-    button {
-        transition: none;
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 
-}
-/* =========================================
-   FIX: FAMILY ANNALS PHOTO AND TEXT LAYOUT
-========================================= */
-
-@media (max-width: 800px) {
-
-    .annals-event-card {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        box-sizing: border-box !important;
-        overflow: hidden;
-    }
-
-    .annals-event-content {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        width: 100% !important;
-        min-width: 0 !important;
-        gap: 15px;
-    }
-
-    .annals-event-image {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-        max-height: 260px;
-        object-fit: contain;
-    }
-
-    .annals-event-details {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        box-sizing: border-box !important;
-    }
-
-    .annals-event-details h3,
-    .annals-event-details p {
-        width: 100%;
-        max-width: 100%;
-        white-space: normal !important;
-        overflow-wrap: break-word;
-        word-break: normal !important;
-        line-height: 1.8;
-    }
-
-    .annals-event-person {
-        display: inline-block;
-        max-width: 100%;
-        white-space: normal !important;
-        overflow-wrap: anywhere;
-    }
-}
-/* FINAL FIX — ANNALS MOBILE EVENT CONTENT */
-
-@media screen and (max-width: 800px) {
-
-    .annals-event-card .annals-event-content {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        width: 100% !important;
-        gap: 15px !important;
-        overflow: visible !important;
-    }
-
-    .annals-event-card .annals-event-image {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-        max-height: 260px !important;
-        margin: 0 !important;
-        flex: none !important;
-        object-fit: contain !important;
-    }
-
-    .annals-event-card .annals-event-details {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        flex: none !important;
-        box-sizing: border-box !important;
-    }
-
-    .annals-event-card .annals-event-details h3,
-    .annals-event-card .annals-event-details p {
-        white-space: normal !important;
-        overflow-wrap: break-word !important;
-        word-break: normal !important;
+    .member-card:hover,
+    .member-card:active {
+        transform: none;
     }
 }
