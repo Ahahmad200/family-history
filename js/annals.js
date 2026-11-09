@@ -103,6 +103,7 @@ async function getFamilyConnections(memberId) {
 // =========================================
 
 const familyAnnals = document.getElementById("familyAnnals");
+const annalDetailsById = new Map();
 
 // Safely display text received from the database.
 function escapeHTML(value) {
@@ -152,6 +153,11 @@ async function loadFamilyAnnals() {
     if (!familyAnnals) return;
 
     familyAnnals.innerHTML = `
+    annalDetailsById.clear();
+
+annals.forEach(annal => {
+    annalDetailsById.set(String(annal.id), annal);
+});
         <div class="annals-loading">
             <div class="annals-loading-icon">📖</div>
             <p>Loading family history...</p>
@@ -287,6 +293,13 @@ async function loadFamilyAnnals() {
                                     ? `<p>${safeDescription}</p>`
                                     : ""
                             }
+                            <button
+    type="button"
+    class="annals-read-story"
+    data-annal-id="${escapeHTML(annal.id)}"
+>
+    Read Full Story →
+</button>
                         </div>
                     </div>
                 </div>
@@ -309,6 +322,108 @@ async function loadFamilyAnnals() {
         `;
     }
 }
+
+/* =========================================
+   READ FULL HISTORICAL STORY
+========================================= */
+
+familyAnnals.addEventListener("click", function(event) {
+    const button = event.target.closest(".annals-read-story");
+
+    if (!button) return;
+
+    const annal = annalDetailsById.get(button.dataset.annalId);
+
+    if (!annal) {
+        alert("Historical event could not be found.");
+        return;
+    }
+
+    const oldPopup = document.getElementById("annalsStoryPopup");
+
+    if (oldPopup) {
+        if (oldPopup.open) oldPopup.close();
+        oldPopup.remove();
+    }
+
+    const memberButton = annal.person_id
+        ? `<button
+            type="button"
+            class="annals-member-link"
+            data-member-id="${escapeHTML(annal.person_id)}"
+        >View family member profile</button>`
+        : "";
+
+    const popup = document.createElement("dialog");
+    popup.id = "annalsStoryPopup";
+
+    popup.style.cssText = `
+        width: min(650px, calc(100% - 30px));
+        max-width: 650px;
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 24px;
+        border: none;
+        border-radius: 18px;
+        background: #fffaf0;
+        color: #382719;
+        box-sizing: border-box;
+    `;
+
+    popup.innerHTML = `
+        <button
+            type="button"
+            class="annals-story-close"
+            style="float:right;font-size:28px;border:none;background:none;cursor:pointer;"
+            aria-label="Close story"
+        >×</button>
+
+        <div style="clear:both;"></div>
+
+        ${annal.photo_url ? `
+            <img
+                src="${escapeHTML(annal.photo_url)}"
+                alt="${escapeHTML(annal.title)}"
+                style="display:block;width:100%;max-height:350px;object-fit:contain;border-radius:12px;margin:15px auto;"
+            >
+        ` : ""}
+
+        <span style="color:#80552b;font-weight:bold;">
+            ${escapeHTML(annal.event_type || "Family event")}
+        </span>
+
+        <h2>${escapeHTML(annal.title || "Untitled event")}</h2>
+
+        <p>📅 ${escapeHTML(formatEventDate(annal.event_date))}</p>
+
+        <div style="line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere;">
+            ${escapeHTML(annal.description || "No historical account has been added yet.")}
+        </div>
+
+        <div style="margin-top:20px;">
+            ${memberButton}
+        </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    popup.addEventListener("click", function(e) {
+        if (
+            e.target === popup ||
+            e.target.closest(".annals-story-close")
+        ) {
+            popup.close();
+            popup.remove();
+        }
+    });
+
+    popup.addEventListener("cancel", function() {
+        popup.remove();
+    });
+
+    popup.showModal();
+});
+
 // =========================================
 // CLICK FAMILY MEMBER NAME
 // =========================================
