@@ -293,13 +293,29 @@ annals.forEach(annal => {
                                     ? `<p>${safeDescription}</p>`
                                     : ""
                             }
-                            <button
+                            
+<button
     type="button"
     class="annals-read-story"
     data-annal-id="${escapeHTML(annal.id)}"
+    style="
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        margin-top: 15px;
+        padding: 12px 20px;
+        background: #80552b;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    "
 >
     Read Full Story →
 </button>
+
                         </div>
                     </div>
                 </div>
