@@ -5159,3 +5159,50 @@ textarea:focus {
         overflow-wrap: anywhere;
     }
 }
+
+/* FAMILY ANNALS — MOBILE PHOTO AND TEXT LAYOUT FIX */
+
+@media screen and (max-width: 800px) {
+
+    .annals-event-content {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        gap: 15px !important;
+        align-items: start !important;
+        overflow: visible !important;
+        box-sizing: border-box !important;
+    }
+
+    .annals-event-content > .annals-event-image {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: 280px !important;
+        object-fit: contain !important;
+        margin: 0 !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .annals-event-content > .annals-event-details {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        overflow-wrap: break-word !important;
+        word-break: normal !important;
+    }
+
+    .annals-event-details h3,
+    .annals-event-details p,
+    .annals-event-details span,
+    .annals-event-details a {
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+    }
+}
