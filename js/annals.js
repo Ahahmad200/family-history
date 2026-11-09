@@ -214,6 +214,11 @@ annals.forEach(annal => {
         );
 
         familyAnnals.innerHTML = "";
+        annalDetailsById.clear();
+
+annals.forEach(annal => {
+    annalDetailsById.set(String(annal.id), annal);
+});
 
         // Render events in chronological order.
         annals.forEach((annal, index) => {
